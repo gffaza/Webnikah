@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Web Nikah Ayu & Faza
 
-## Getting Started
+Undangan pernikahan digital (Next.js 16 App Router) berdasarkan desain Figma
+[Notes / Section 1](https://www.figma.com/design/gpLE7SzFrQeIr4Ge4zSRyp/Notes?node-id=141-65932).
 
-First, run the development server:
+## Menjalankan
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # isi kredensial Sanity
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Link per tamu: `https://domain-anda/?to=Nama+Tamu`. Nama tampil di cover dan otomatis terisi di form RSVP.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Mengganti konten
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Semua teks, tanggal, jadwal, lokasi, rekening, dan path gambar ada di
+[`content/wedding.ts`](content/wedding.ts).
 
-## Learn More
+- **Video prewedding:** isi `youtubeId` (contoh `dQw4w9WgXcQ`). Selama kosong, tampil frame placeholder.
+- **Countdown:** dihitung dari `startsAt`.
 
-To learn more about Next.js, take a look at the following resources:
+## Mengganti aset
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Gambar di `public/images/` saat ini adalah placeholder resolusi rendah hasil crop dari screenshot Figma
+(dibuat oleh `node scripts/crop-placeholders.mjs`). Timpa dengan file berukuran lebih besar
+menggunakan nama yang sama:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| File | Isi | Ekspor Figma yang disarankan |
+| --- | --- | --- |
+| `bg-floral.webp` | Latar ornamen bunga + joglo | node `126:3026`, PNG 2x |
+| `butterfly.webp` | Kupu-kupu di cover | node `126:1775`, PNG 2x |
+| `intro.webp`, `bride.webp`, `groom.webp`, `story.webp`, `closing.webp` | Foto pasangan | foto asli |
+| `gallery-1..5.webp` | Galeri | foto asli |
+| `qris.webp`, `bank-mandiri.webp`, `bank-bsi.webp` | Wedding gift | QRIS asli + logo bank |
+| `og.jpg` | Preview saat link dibagikan (1200x630) | bebas |
 
-## Deploy on Vercel
+Musik latar: timpa `public/audio/backsound.wav` (atau taruh `.mp3` dan ubah `music` di `content/wedding.ts`).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## RSVP & ucapan
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Data disimpan di Sanity project `59mz4b8q` (dataset `production`) sebagai dokumen `_type: "rsvp"`.
+Ucapan dengan `hidden: true` tidak ditampilkan. Daftar ucapan di-cache dan diperbarui otomatis setelah
+tamu mengirim form, serta direvalidasi tiap menit.
+
+Untuk deploy ke Vercel, set `SANITY_PROJECT_ID`, `SANITY_DATASET`, dan `SANITY_API_TOKEN` di
+Environment Variables project.
