@@ -50,6 +50,18 @@ body {
 
 .invite {
   container-type: inline-size;
+  /*
+   * Frame height: keep the Figma 1080×1920 (9:16) proportion, but never shorter
+   * than the dynamic viewport so tall phones still get one full-screen panel.
+   * 100vh is the fallback; 100dvh tracks mobile browser chrome.
+   */
+  --invite-frame-min-h: max(calc(100cqw * 16 / 9), 100vh);
+}
+
+@supports (height: 100dvh) {
+  .invite {
+    --invite-frame-min-h: max(calc(100cqw * 16 / 9), 100dvh);
+  }
 }
 
 [popover] {

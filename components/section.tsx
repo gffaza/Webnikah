@@ -40,7 +40,7 @@ export function Section({
   return (
     <section
       id={id}
-      className="relative isolate flex min-h-[calc(100cqw*16/9)] flex-col overflow-hidden"
+      className="relative isolate flex min-h-[var(--invite-frame-min-h)] flex-col overflow-hidden"
     >
       {background === "arch" ? (
         <ArchBackdrop />
