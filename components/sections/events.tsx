@@ -5,7 +5,7 @@ export function Events() {
   const { dateLabel, venue } = wedding;
 
   return (
-    <Section id="acara" panel="arch" className="px-200 pt-295">
+    <Section id="acara" background="arch" panel="none" className="px-200 pt-295">
       {wedding.events.map((event, index) => (
         <div key={event.name} className={`reveal ${index > 0 ? "mt-27" : ""}`}>
           <h2 className="text-h1 font-bold text-rose">{event.name}</h2>

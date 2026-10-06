@@ -6,8 +6,8 @@ export function Story() {
   const { photo, items } = wedding.story;
 
   return (
-    <Section id="cerita" panel="arch-story" className="px-233 pt-251">
-      <h2 className="reveal text-h1 font-bold text-white">Our Story</h2>
+    <Section id="cerita" background="arch" panel="none" className="px-233 pt-251">
+      <h2 className="reveal text-h1 font-bold text-rose">Our Story</h2>
 
       <div className="reveal relative mt-46 size-500 overflow-hidden rounded-full border-[length:calc(var(--spacing)*12)] border-white shadow-md">
         <Image

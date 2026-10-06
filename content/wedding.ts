@@ -161,5 +161,5 @@ export const wedding: Wedding = {
     photo: "/images/closing.webp",
     text: "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila berkenan hadir dan memberikan doa restunya untuk pernikahan kami. Atas doa & restunya, kami ucapkan terima kasih.",
   },
-  music: "/audio/backsound.wav",
+  music: "/audio/backsoundjava.weba",
 };
