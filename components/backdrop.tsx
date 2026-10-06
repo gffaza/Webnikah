@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
 
 /**
  * Layered HD backdrops built from public/asset/ embeds
@@ -39,7 +40,12 @@ function Layer({
   if (src.endsWith(".svg")) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
-      <img src={src} alt="" aria-hidden className={`pointer-events-none absolute select-none ${className}`} />
+      <img
+        src={src}
+        alt=""
+        aria-hidden
+        className={`pointer-events-none absolute select-none ${className}`}
+      />
     );
   }
 
@@ -71,77 +77,113 @@ function Layer({
   );
 }
 
+/**
+ * Motion lives on this wrapper so child `-translate-x-1/2` / rotate utilities stay intact.
+ * Drift is activated by `[data-invite-phase]` in globals.css.
+ */
+function Float({
+  variant,
+  children,
+}: {
+  variant: "a" | "b" | "c" | "d";
+  children: ReactNode;
+}) {
+  return (
+    <div className={`float-layer float-layer--${variant} absolute inset-0`}>{children}</div>
+  );
+}
+
 /** Floral scene — layout aligned with public/5.svg */
 export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
   return (
     <div aria-hidden className="absolute inset-0 -z-20 overflow-hidden bg-[#f7f1ec]">
       <Layer src={img.floralFrame} fill preload={preload} className="inset-0" />
 
-      <Layer
-        src={img.faintVine}
-        width={1892}
-        height={1501}
-        className="top-[2%] left-[-10%] w-[65%] opacity-60"
-      />
-      <Layer
-        src={img.faintVine}
-        width={1892}
-        height={1501}
-        className="top-[2%] right-[-10%] w-[65%] -scale-x-100 opacity-60"
-      />
+      <Float variant="a">
+        <Layer
+          src={img.faintVine}
+          width={1892}
+          height={1501}
+          className="top-[2%] left-[-10%] w-[65%] opacity-60"
+        />
+      </Float>
+      <Float variant="b">
+        <Layer
+          src={img.faintVine}
+          width={1892}
+          height={1501}
+          className="top-[2%] right-[-10%] w-[65%] -scale-x-100 opacity-60"
+        />
+      </Float>
 
-      <Layer
-        src={img.gunungan}
-        width={800}
-        height={900}
-        className="top-[26%] left-1/2 w-[78%] -translate-x-1/2 opacity-45 mix-blend-multiply"
-      />
+      <Float variant="c">
+        <Layer
+          src={img.gunungan}
+          width={800}
+          height={900}
+          className="top-[26%] left-1/2 w-[78%] -translate-x-1/2 opacity-45 mix-blend-multiply"
+        />
+      </Float>
 
-      <Layer
-        src={img.joglo}
-        width={2400}
-        height={1488}
-        className="bottom-[1%] left-1/2 w-[94%] -translate-x-1/2"
-      />
+      <Float variant="d">
+        <Layer
+          src={img.joglo}
+          width={2400}
+          height={1488}
+          className="bottom-[1%] left-1/2 w-[94%] -translate-x-1/2"
+        />
+      </Float>
 
-      <Layer
-        src={img.lilies}
-        width={1751}
-        height={1800}
-        className="bottom-[-3%] left-[-20%] w-[62%]"
-      />
-      <Layer
-        src={img.lilies}
-        width={1751}
-        height={1800}
-        className="right-[-20%] bottom-[-3%] w-[62%] -scale-x-100"
-      />
+      <Float variant="a">
+        <Layer
+          src={img.lilies}
+          width={1751}
+          height={1800}
+          className="bottom-[-3%] left-[-20%] w-[62%]"
+        />
+      </Float>
+      <Float variant="b">
+        <Layer
+          src={img.lilies}
+          width={1751}
+          height={1800}
+          className="right-[-20%] bottom-[-3%] w-[62%] -scale-x-100"
+        />
+      </Float>
 
-      <Layer
-        src={img.sideButterfly}
-        width={860}
-        height={975}
-        className="bottom-[17%] left-[1%] w-[17%]"
-      />
-      <Layer
-        src={img.sideButterfly}
-        width={860}
-        height={975}
-        className="right-[1%] bottom-[17%] w-[17%] -scale-x-100"
-      />
+      <Float variant="c">
+        <Layer
+          src={img.sideButterfly}
+          width={860}
+          height={975}
+          className="bottom-[17%] left-[1%] w-[17%]"
+        />
+      </Float>
+      <Float variant="d">
+        <Layer
+          src={img.sideButterfly}
+          width={860}
+          height={975}
+          className="right-[1%] bottom-[17%] w-[17%] -scale-x-100"
+        />
+      </Float>
 
-      <Layer
-        src={img.hangingVine}
-        width={604}
-        height={611}
-        className="top-[0%] left-[8%] w-[28%] -rotate-6"
-      />
-      <Layer
-        src={img.hangingVine}
-        width={604}
-        height={611}
-        className="top-[0%] right-[8%] w-[28%] rotate-6 -scale-x-100"
-      />
+      <Float variant="a">
+        <Layer
+          src={img.hangingVine}
+          width={604}
+          height={611}
+          className="top-[0%] left-[8%] w-[28%] -rotate-6"
+        />
+      </Float>
+      <Float variant="b">
+        <Layer
+          src={img.hangingVine}
+          width={604}
+          height={611}
+          className="top-[0%] right-[8%] w-[28%] rotate-6 -scale-x-100"
+        />
+      </Float>
     </div>
   );
 }
@@ -150,60 +192,76 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
 export function ArchBackdrop() {
   return (
     <div aria-hidden className="absolute inset-0 -z-20 overflow-hidden bg-[#f8f4f0]">
-      <Layer
-        src={img.faintVine}
-        width={1892}
-        height={1501}
-        className="top-[5%] left-[-14%] w-[58%] opacity-45"
-      />
-      <Layer
-        src={img.faintVine}
-        width={1892}
-        height={1501}
-        className="top-[5%] right-[-14%] w-[58%] -scale-x-100 opacity-45"
-      />
+      <Float variant="a">
+        <Layer
+          src={img.faintVine}
+          width={1892}
+          height={1501}
+          className="top-[5%] left-[-14%] w-[58%] opacity-45"
+        />
+      </Float>
+      <Float variant="b">
+        <Layer
+          src={img.faintVine}
+          width={1892}
+          height={1501}
+          className="top-[5%] right-[-14%] w-[58%] -scale-x-100 opacity-45"
+        />
+      </Float>
 
       <div className="absolute inset-x-[12.5%] top-[4%] bottom-[7%] rounded-[999px] bg-[#f0c9b8]" />
 
-      <Layer
-        src={img.gunungan}
-        width={800}
-        height={900}
-        className="top-[16%] left-1/2 w-[70%] -translate-x-1/2 opacity-40 mix-blend-multiply"
-      />
+      <Float variant="c">
+        <Layer
+          src={img.gunungan}
+          width={800}
+          height={900}
+          className="top-[16%] left-1/2 w-[70%] -translate-x-1/2 opacity-40 mix-blend-multiply"
+        />
+      </Float>
 
-      <Layer
-        src={img.flowerVine}
-        width={1163}
-        height={2150}
-        className="top-[7%] left-[6%] w-[24%] -rotate-[6deg]"
-      />
-      <Layer
-        src={img.flowerVine}
-        width={1163}
-        height={2150}
-        className="top-[7%] right-[6%] w-[24%] rotate-[6deg] -scale-x-100"
-      />
+      <Float variant="a">
+        <Layer
+          src={img.flowerVine}
+          width={1163}
+          height={2150}
+          className="top-[7%] left-[6%] w-[24%] -rotate-[6deg]"
+        />
+      </Float>
+      <Float variant="b">
+        <Layer
+          src={img.flowerVine}
+          width={1163}
+          height={2150}
+          className="top-[7%] right-[6%] w-[24%] rotate-[6deg] -scale-x-100"
+        />
+      </Float>
 
-      <Layer
-        src={img.lilies}
-        width={1751}
-        height={1800}
-        className="bottom-[-2%] left-[-16%] w-[55%]"
-      />
-      <Layer
-        src={img.lilies}
-        width={1751}
-        height={1800}
-        className="right-[-16%] bottom-[-2%] w-[55%] -scale-x-100"
-      />
+      <Float variant="c">
+        <Layer
+          src={img.lilies}
+          width={1751}
+          height={1800}
+          className="bottom-[-2%] left-[-16%] w-[55%]"
+        />
+      </Float>
+      <Float variant="d">
+        <Layer
+          src={img.lilies}
+          width={1751}
+          height={1800}
+          className="right-[-16%] bottom-[-2%] w-[55%] -scale-x-100"
+        />
+      </Float>
 
-      <Layer
-        src={img.pinkButterfly}
-        width={1462}
-        height={1170}
-        className="top-[1%] left-1/2 w-[32%] -translate-x-1/2"
-      />
+      <Float variant="d">
+        <Layer
+          src={img.pinkButterfly}
+          width={1462}
+          height={1170}
+          className="top-[1%] left-1/2 w-[32%] -translate-x-1/2"
+        />
+      </Float>
     </div>
   );
 }

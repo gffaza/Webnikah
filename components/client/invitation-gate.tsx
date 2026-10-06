@@ -9,8 +9,12 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { OpeningCinematic } from "@/components/client/opening-cinematic";
+
+type Phase = "locked" | "cinematic" | "opened";
 
 type Gate = {
+  phase: Phase;
   opened: boolean;
   playing: boolean;
   open: () => void;
@@ -26,7 +30,8 @@ function useGate() {
 }
 
 /**
- * Locks scrolling until the guest taps "Buka Undangan", then starts the music.
+ * Locks scrolling until the guest taps "Buka Undangan".
+ * Starts music on the gesture, holds a short living-backdrop beat, then unlocks + scrolls.
  * Browsers only allow audio playback after a user gesture, so the button is the trigger.
  * The lock is applied from JS, so the page stays scrollable if JS never loads.
  */
@@ -40,8 +45,17 @@ export function InvitationGate({
   children: ReactNode;
 }) {
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [opened, setOpened] = useState(false);
+  const [phase, setPhase] = useState<Phase>("locked");
   const [playing, setPlaying] = useState(false);
+  const opened = phase === "opened";
+
+  useEffect(() => {
+    const invite = document.querySelector(".invite");
+    invite?.setAttribute("data-invite-phase", phase);
+    return () => {
+      invite?.removeAttribute("data-invite-phase");
+    };
+  }, [phase]);
 
   useEffect(() => {
     if (opened) return;
@@ -60,12 +74,17 @@ export function InvitationGate({
   }, []);
 
   const open = useCallback(() => {
-    setOpened(true);
+    if (phase !== "locked") return;
+    setPhase("cinematic");
     play();
+  }, [phase, play]);
+
+  const finishCinematic = useCallback(() => {
+    setPhase("opened");
     requestAnimationFrame(() => {
       document.getElementById(scrollTo)?.scrollIntoView({ behavior: "smooth" });
     });
-  }, [play, scrollTo]);
+  }, [scrollTo]);
 
   const toggleMusic = useCallback(() => {
     const audio = audioRef.current;
@@ -79,20 +98,22 @@ export function InvitationGate({
   }, [play]);
 
   return (
-    <GateContext value={{ opened, playing, open, toggleMusic }}>
+    <GateContext value={{ phase, opened, playing, open, toggleMusic }}>
       {children}
+      {phase === "cinematic" ? <OpeningCinematic onComplete={finishCinematic} /> : null}
       <audio ref={audioRef} src={music} loop preload="none" />
     </GateContext>
   );
 }
 
 export function OpenInvitationButton({ children }: { children: ReactNode }) {
-  const { open } = useGate();
+  const { open, phase } = useGate();
   return (
     <button
       type="button"
       onClick={open}
-      className="reveal rounded-card bg-rose px-64 py-16 text-body text-white shadow-sm transition hover:bg-rose-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose"
+      disabled={phase !== "locked"}
+      className="reveal rounded-card bg-rose px-64 py-16 text-body text-white shadow-sm transition hover:bg-rose-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose disabled:opacity-60"
     >
       {children}
     </button>

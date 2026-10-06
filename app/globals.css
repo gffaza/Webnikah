@@ -83,3 +83,100 @@ body {
     transform: none;
   }
 }
+
+/* Soft settle on the cover while the opening beat runs (no video overlay). */
+.invite[data-invite-phase="cinematic"] .cover-ui {
+  opacity: 0.72;
+  transition: opacity 0.7s ease;
+  pointer-events: none;
+}
+
+.invite .cover-ui {
+  transition: opacity 0.5s ease;
+}
+
+@keyframes float-sway-a {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(1.2%, -1.4%) rotate(-1.2deg);
+  }
+}
+
+@keyframes float-sway-b {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(-1.4%, -1%) rotate(1.4deg);
+  }
+}
+
+@keyframes float-sway-c {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0.8%, -1.8%);
+  }
+}
+
+@keyframes float-sway-d {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(-0.6%, -0.9%) rotate(0.8deg);
+  }
+}
+
+@keyframes float-butterfly {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(0, -2.4%) rotate(-2.5deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Stronger drift during the opening beat */
+  .invite[data-invite-phase="cinematic"] .float-layer--a {
+    animation: float-sway-a 4.5s ease-in-out infinite;
+  }
+  .invite[data-invite-phase="cinematic"] .float-layer--b {
+    animation: float-sway-b 5.2s ease-in-out infinite;
+  }
+  .invite[data-invite-phase="cinematic"] .float-layer--c {
+    animation: float-sway-c 3.8s ease-in-out infinite;
+  }
+  .invite[data-invite-phase="cinematic"] .float-layer--d {
+    animation: float-sway-d 6s ease-in-out infinite;
+  }
+  .invite[data-invite-phase="cinematic"] .float-layer--butterfly {
+    animation: float-butterfly 3.2s ease-in-out infinite;
+  }
+
+  /* Soft ambient motion after the invite is open */
+  .invite[data-invite-phase="opened"] .float-layer--a {
+    animation: float-sway-a 11s ease-in-out infinite;
+  }
+  .invite[data-invite-phase="opened"] .float-layer--b {
+    animation: float-sway-b 13s ease-in-out infinite;
+  }
+  .invite[data-invite-phase="opened"] .float-layer--c {
+    animation: float-sway-c 9s ease-in-out infinite;
+  }
+  .invite[data-invite-phase="opened"] .float-layer--d {
+    animation: float-sway-d 15s ease-in-out infinite;
+  }
+  .invite[data-invite-phase="opened"] .float-layer--butterfly {
+    animation: float-butterfly 8s ease-in-out infinite;
+  }
+}
