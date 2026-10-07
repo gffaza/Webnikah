@@ -1,16 +1,16 @@
 import { wedding, type Wedding } from "@/content/wedding";
 
-/** Unique HD backdrop parts used across Floral + Arch scenes. */
+/** Lean WebP layers used on the cover / first paint. */
 export const backdropAssets = [
-  "/images/parts/pink-butterfly.png",
-  "/images/parts/side-butterfly.png",
-  "/images/parts/lilies.png",
-  "/images/parts/joglo-house.png",
-  "/images/parts/flower-vine.png",
-  "/images/parts/faint-vine.png",
-  "/images/parts/floral-frame.png",
+  "/images/parts/floral-frame.webp",
+  "/images/parts/pink-butterfly.webp",
+  "/images/parts/side-butterfly.webp",
+  "/images/parts/lilies.webp",
+  "/images/parts/joglo-house.webp",
+  "/images/parts/flower-vine.webp",
+  "/images/parts/faint-vine.webp",
   "/images/parts/hanging-vine.svg",
-  "/images/parts/gunungan-raster.webp",
+  "/images/parts/gunungan.webp",
 ] as const;
 
 /** Every image (and optional audio) the invite should warm before revealing. */
@@ -62,7 +62,6 @@ function preloadAudio(src: string): Promise<void> {
     audio.addEventListener("canplaythrough", done, { once: true });
     audio.addEventListener("error", done, { once: true });
     audio.src = src;
-    // Some browsers never fire canplaythrough for large/looped files.
     window.setTimeout(done, 8000);
   });
 }
@@ -74,7 +73,7 @@ export type PreloadProgress = {
 };
 
 /**
- * Warm every invite asset into the browser cache, reporting progress.
+ * Warm invite assets into the browser cache, reporting progress.
  * Failures never block reveal — a soft timeout keeps the gate from hanging.
  */
 export async function preloadInviteAssets(

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Suspense } from "react";
 import { OpenInvitationButton } from "@/components/client/invitation-gate";
 import { GuestName } from "@/components/client/guest-name";
@@ -12,19 +11,6 @@ export function Cover() {
         aria-hidden
         className="absolute inset-x-162 top-196 bottom-195 z-0 rounded-full border-[length:calc(var(--spacing)*5)] border-rose-deep/70"
       />
-
-      {/* HD butterfly — unmasked embed from public/asset/Clip path group-1.svg */}
-      <div className="float-layer float-layer--butterfly pointer-events-none absolute inset-0 z-[2]">
-        <Image
-          src="/images/parts/pink-butterfly.png"
-          alt=""
-          width={1462}
-          height={1170}
-          sizes="(max-width: 480px) 36vw, 173px"
-          preload
-          className="absolute top-40 left-1/2 w-[36%] -translate-x-1/2 select-none"
-        />
-      </div>
 
       <div className="cover-ui relative z-[3] flex flex-1 flex-col items-center">
         <p className="text-lead tracking-[0.1em] text-ink">THE WEDDING OF</p>

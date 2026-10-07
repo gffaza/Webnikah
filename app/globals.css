@@ -149,6 +149,12 @@ body {
   transition: opacity 0.5s ease;
 }
 
+/* SVG <g.float-layer> needs fill-box so % translates stay local to each ornament. */
+.float-layer {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
 @keyframes float-sway-a {
   0%,
   100% {

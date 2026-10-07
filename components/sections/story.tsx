@@ -7,7 +7,7 @@ export function Story() {
 
   return (
     <Section id="cerita" background="arch" panel="none" className="px-233 pt-251">
-      <h2 className="reveal text-h1 font-bold text-rose">Our Story</h2>
+      <h2 className="reveal text-h1 font-bold text-white drop-shadow-sm">Our Story</h2>
 
       <div className="reveal relative mt-46 size-500 overflow-hidden rounded-full border-[length:calc(var(--spacing)*12)] border-white shadow-md">
         <Image

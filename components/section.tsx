@@ -1,5 +1,8 @@
 import type { ReactNode } from "react";
-import { DeferredBackdrop } from "@/components/client/deferred-backdrop";
+import {
+  DeferredBackdrop,
+  type BackdropType,
+} from "@/components/client/deferred-backdrop";
 
 type Panel =
   /** Rounded translucent card used on most frames (Rectangle 17/18 in Figma). */
@@ -11,9 +14,6 @@ type Panel =
   /** Wide rectangle from the Our Gallery frame. */
   | "gallery"
   | "none";
-
-/** Floral = layered asset composition. Arch = peach pill + vines + lilies. */
-type Background = "floral" | "arch";
 
 const panelClass: Record<Exclude<Panel, "none">, string> = {
   card: "inset-x-70 top-70 bottom-108 rounded-panel bg-cream/75",
@@ -32,7 +32,7 @@ export function Section({
 }: {
   id: string;
   panel?: Panel;
-  background?: Background;
+  background?: BackdropType;
   preload?: boolean;
   className?: string;
   children: ReactNode;

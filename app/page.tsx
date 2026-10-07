@@ -1,3 +1,4 @@
+import { BottomNav } from "@/components/client/bottom-nav";
 import { InvitationGate, MusicToggle } from "@/components/client/invitation-gate";
 import { Closing } from "@/components/sections/closing";
 import { Bride, Groom } from "@/components/sections/couple";
@@ -39,6 +40,7 @@ export default function Home() {
         <Rsvp />
         <Closing />
         <MusicToggle />
+        <BottomNav />
       </InvitationGate>
     </main>
   );

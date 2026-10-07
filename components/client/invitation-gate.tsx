@@ -28,7 +28,7 @@ const GateContext = createContext<Gate | null>(null);
 /** Survives Safari tab reloads within the same session (iOS memory kills). */
 const OPENED_KEY = "webnikah-invite-opened";
 
-function useGate() {
+export function useGate() {
   const gate = use(GateContext);
   if (!gate) throw new Error("useGate must be used inside <InvitationGate>");
   return gate;
@@ -200,7 +200,7 @@ export function MusicToggle() {
       onClick={toggleMusic}
       aria-label={playing ? "Jeda musik" : "Putar musik"}
       aria-pressed={playing}
-      className="fixed right-[max(16px,calc(50vw-224px))] bottom-[16px] z-50 grid size-[44px] place-items-center rounded-full bg-rose text-white shadow-lg ring-2 ring-white/70 transition hover:bg-rose-deep"
+      className="fixed right-[max(16px,calc(50vw-224px))] bottom-[max(80px,calc(env(safe-area-inset-bottom)+72px))] z-50 grid size-[44px] place-items-center rounded-full bg-rose text-white shadow-lg ring-2 ring-white/70 transition hover:bg-rose-deep"
     >
       <svg
         viewBox="0 0 24 24"

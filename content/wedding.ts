@@ -52,7 +52,7 @@ export type Wedding = {
     address: string;
     mapsUrl: string;
   };
-  /** YouTube video ID. Leave empty to show the placeholder frame. */
+  /** YouTube Shorts / video ID (or full URL). Leave empty for placeholder. */
   youtubeId: string;
   story: {
     photo: string;
@@ -111,7 +111,7 @@ export const wedding: Wedding = {
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Sidorejo%2C+Lendah%2C+Kulon+Progo",
   },
-  youtubeId: "https://youtube.com/shorts/zxZhcQLBDA8?feature=share",
+  youtubeId: "zxZhcQLBDA8",
   story: {
     photo: "/galery/ourstory.jpg",
     items: [
@@ -137,7 +137,12 @@ export const wedding: Wedding = {
     { src: "/galery/galery1.jpg", alt: "Faza berbusana adat" },
     { src: "/galery/galery2.jpg", alt: "Ayu di taman" },
     { src: "/galery/galery4.jpg", alt: "Ayu dan Faza di tangga" },
-    { src: "/galery/slide1.jpg", alt: "Ayu dan Faza berdampingan" },
+    { src: "/galery/slide1.jpg", alt: "Ayu dan Faza berdampingan di ambang pintu" },
+    { src: "/galery/slide2.jpg", alt: "Ayu bersandar di bahu Faza" },
+    { src: "/galery/slide3.jpg", alt: "Ayu dan Faza berpelukan" },
+    { src: "/galery/slide4.jpg", alt: "Ayu memeluk Faza dari belakang" },
+    { src: "/galery/slide5.jpg", alt: "Ayu dan Faza saling tersenyum" },
+    { src: "/galery/slide6.jpg", alt: "Ayu dan Faza di bawah lengkung" },
   ],
   gift: {
     text: "Doa Restu Anda merupakan karunia yang sangat berarti bagi kami. Dan jika memberi adalah ungkapan tanda kasih Anda. Anda dapat memberi kado secara cashless.",

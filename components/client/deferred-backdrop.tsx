@@ -1,25 +1,24 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ArchBackdrop, FloralBackdrop } from "@/components/backdrop";
 
-type Background = "floral" | "arch";
+export type BackdropType = "floral" | "arch";
 
 /**
- * Mounts heavy layered backdrops only when the section nears the viewport.
- * Cover uses `eager` so the first paint stays complete; offscreen sections
- * stay as a solid tint until needed — critical for iOS Safari memory.
+ * Mounts backdrops when the section nears the viewport.
+ * Cover uses `eager`; offscreen sections stay tinted until needed.
  */
 export function DeferredBackdrop({
   type,
   eager = false,
 }: {
-  type: Background;
+  type: BackdropType;
   eager?: boolean;
 }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(eager);
-  const tint = type === "arch" ? "bg-[#f8f4f0]" : "bg-[#f7f1ec]";
+  const tint = "#f5f2f2";
 
   useEffect(() => {
     if (active) return;
@@ -32,22 +31,30 @@ export function DeferredBackdrop({
         setActive(true);
         io.disconnect();
       },
-      // Prefetch roughly one viewport ahead so scroll stays smooth.
-      { rootMargin: "80% 0px", threshold: 0 },
+      { rootMargin: "100% 0px", threshold: 0 },
     );
     io.observe(host);
     return () => io.disconnect();
   }, [active]);
 
+  let scene: ReactNode = null;
+  if (active) {
+    scene =
+      type === "arch" ? (
+        <ArchBackdrop preload={eager} />
+      ) : (
+        <FloralBackdrop preload={eager} />
+      );
+  }
+
   return (
-    <div ref={hostRef} aria-hidden className={`absolute inset-0 -z-20 ${tint}`}>
-      {active ? (
-        type === "arch" ? (
-          <ArchBackdrop preload={eager} />
-        ) : (
-          <FloralBackdrop preload={eager} />
-        )
-      ) : null}
+    <div
+      ref={hostRef}
+      aria-hidden
+      className="absolute inset-0 -z-20"
+      style={{ backgroundColor: tint }}
+    >
+      {scene}
     </div>
   );
 }

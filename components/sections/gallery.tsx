@@ -1,9 +1,10 @@
 import Image from "next/image";
+import { GalleryCarousel } from "@/components/client/gallery-carousel";
 import { Section } from "@/components/section";
 import { wedding, type GalleryPhoto } from "@/content/wedding";
 
-/** Aspect ratios of the five slots in the Figma "Our Galery" grid, in reading order. */
-const slots = ["125/115", "125/161", "125/161", "125/118", "260/163"] as const;
+/** Aspect ratios of the four grid slots above the wide carousel, in reading order. */
+const slots = ["125/115", "125/161", "125/161", "125/118"] as const;
 
 function Photo({ photo, id, aspect }: { photo: GalleryPhoto; id: string; aspect: string }) {
   return (
@@ -41,6 +42,7 @@ function Photo({ photo, id, aspect }: { photo: GalleryPhoto; id: string; aspect:
 
 export function Gallery() {
   const photos = wedding.gallery.slice(0, slots.length);
+  const slides = wedding.gallery.slice(slots.length);
   const at = (index: number) =>
     photos[index] && (
       <Photo photo={photos[index]} id={`foto-${index + 1}`} aspect={slots[index]} />
@@ -58,7 +60,9 @@ export function Gallery() {
           {at(1)}
           {at(3)}
         </div>
-        <div className="col-span-2">{at(4)}</div>
+        <div className="col-span-2">
+          <GalleryCarousel photos={slides} />
+        </div>
       </div>
     </Section>
   );
