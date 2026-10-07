@@ -1,62 +1,27 @@
 "use client";
 
-import { useEffect, useEffectEvent, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { ArchBackdrop, FloralBackdrop } from "@/components/backdrop";
-import type { BackdropType } from "@/components/client/deferred-backdrop";
 import { useIOSWebKit } from "@/components/client/use-ios-webkit";
 
-const FADE_MS = 850;
-
-function LiteScene({ type }: { type: BackdropType }) {
-  return type === "arch" ? (
-    <ArchBackdrop quality="lite" />
-  ) : (
-    <FloralBackdrop preload quality="lite" />
-  );
+/** Hermite smoothstep — softer than a linear mix at the ends. */
+function smoothstep(t: number): number {
+  const x = Math.min(1, Math.max(0, t));
+  return x * x * (3 - 2 * x);
 }
 
 /**
- * iOS / iPadOS only: one lite layered scene for the whole invite.
- * Crossfades floral ↔ arch so the swap does not blink.
+ * iOS / iPadOS only.
+ * Both scenes stay mounted; opacity follows a scroll-weighted floral/arch mix
+ * (updated on the compositor via refs — no remount blink).
  */
 export function SharedInviteBackdrop() {
   const ios = useIOSWebKit();
-  const [current, setCurrent] = useState<BackdropType>("floral");
-  const [outgoing, setOutgoing] = useState<BackdropType | null>(null);
-  const [incomingVisible, setIncomingVisible] = useState(true);
-  const [outgoingVisible, setOutgoingVisible] = useState(true);
-  const busy = useRef(false);
-  const wanted = useRef<BackdropType>("floral");
-  const currentRef = useRef<BackdropType>("floral");
-
-  const finishFade = useEffectEvent(() => {
-    setOutgoing(null);
-    setOutgoingVisible(true);
-    busy.current = false;
-    if (wanted.current !== currentRef.current) {
-      startFade(wanted.current);
-    }
-  });
-
-  const startFade = useEffectEvent((next: BackdropType) => {
-    if (next === currentRef.current) return;
-    busy.current = true;
-    setOutgoing(currentRef.current);
-    setOutgoingVisible(true);
-    setIncomingVisible(false);
-    setCurrent(next);
-    currentRef.current = next;
-
-    // Double rAF so the browser paints opacity:0 before transitioning to 1.
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        setIncomingVisible(true);
-        setOutgoingVisible(false);
-      });
-    });
-
-    window.setTimeout(() => finishFade(), FADE_MS + 50);
-  });
+  const floralRef = useRef<HTMLDivElement>(null);
+  const archRef = useRef<HTMLDivElement>(null);
+  const archMixRef = useRef(0);
+  const targetRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (ios !== true) return;
@@ -71,23 +36,54 @@ export function SharedInviteBackdrop() {
 
     const ratios = new Map<Element, number>();
 
-    const pick = () => {
-      let best: Element | null = null;
-      let bestRatio = 0;
-      for (const [el, ratio] of ratios) {
-        if (ratio > bestRatio) {
-          bestRatio = ratio;
-          best = el;
-        }
+    const apply = (mix: number) => {
+      const archOpacity = smoothstep(mix);
+      const floralOpacity = 1 - archOpacity;
+      const floralEl = floralRef.current;
+      const archEl = archRef.current;
+      if (floralEl) {
+        floralEl.style.opacity = String(floralOpacity);
+        floralEl.dataset.sceneLive = floralOpacity > 0.04 ? "true" : "false";
       }
-      // Ignore weak intersections so boundary flicker does not thrash fades.
-      if (!best || bestRatio < 0.2) return;
-      const next = best.getAttribute("data-backdrop");
-      if (next !== "floral" && next !== "arch") return;
-      wanted.current = next;
-      if (busy.current) return;
-      if (next === currentRef.current) return;
-      startFade(next);
+      if (archEl) {
+        archEl.style.opacity = String(archOpacity);
+        archEl.dataset.sceneLive = archOpacity > 0.04 ? "true" : "false";
+      }
+    };
+
+    const sampleTarget = () => {
+      let floral = 0;
+      let arch = 0;
+      for (const section of sections) {
+        const ratio = ratios.get(section) ?? 0;
+        if (ratio <= 0) continue;
+        const kind = section.getAttribute("data-backdrop");
+        if (kind === "arch") arch += ratio;
+        else if (kind === "floral") floral += ratio;
+      }
+      const total = floral + arch;
+      targetRef.current = total > 0 ? arch / total : 0;
+    };
+
+    const tick = () => {
+      rafRef.current = null;
+      const target = targetRef.current;
+      const current = archMixRef.current;
+      // Soft follow — feels tied to scroll without hard cuts.
+      const next = current + (target - current) * 0.16;
+      const settled = Math.abs(target - next) < 0.0008 ? target : next;
+      archMixRef.current = settled;
+      apply(settled);
+      if (settled !== target) {
+        rafRef.current = requestAnimationFrame(tick);
+      }
+    };
+
+    const kick = () => {
+      sampleTarget();
+      if (rafRef.current == null) {
+        rafRef.current = requestAnimationFrame(tick);
+      }
     };
 
     const io = new IntersectionObserver(
@@ -95,25 +91,27 @@ export function SharedInviteBackdrop() {
         for (const entry of entries) {
           ratios.set(entry.target, entry.intersectionRatio);
         }
-        pick();
+        kick();
       },
       {
-        rootMargin: "-18% 0px -18% 0px",
-        threshold: [0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1],
+        threshold: [
+          0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6,
+          0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1,
+        ],
       },
     );
 
     for (const section of sections) io.observe(section);
-    return () => io.disconnect();
+    apply(0);
+    kick();
+
+    return () => {
+      io.disconnect();
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+    };
   }, [ios]);
 
   if (ios !== true) return null;
-
-  const fadeStyle = {
-    transitionProperty: "opacity",
-    transitionDuration: `${FADE_MS}ms`,
-    transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-  } as const;
 
   return (
     <div
@@ -121,19 +119,21 @@ export function SharedInviteBackdrop() {
       className="pointer-events-none fixed top-0 left-1/2 z-0 h-dvh w-full max-w-[480px] -translate-x-1/2 overflow-hidden bg-[#f5f2f2]"
       data-backdrop-mode="ios-lite"
     >
-      {outgoing != null && (
-        <div
-          className="absolute inset-0"
-          style={{ ...fadeStyle, opacity: outgoingVisible ? 1 : 0 }}
-        >
-          <LiteScene type={outgoing} />
-        </div>
-      )}
       <div
-        className="absolute inset-0"
-        style={{ ...fadeStyle, opacity: incomingVisible ? 1 : 0 }}
+        ref={floralRef}
+        className="ios-backdrop-scene absolute inset-0"
+        data-scene-live="true"
+        style={{ opacity: 1, willChange: "opacity", transform: "translateZ(0)" }}
       >
-        <LiteScene type={current} />
+        <FloralBackdrop preload quality="lite" />
+      </div>
+      <div
+        ref={archRef}
+        className="ios-backdrop-scene absolute inset-0"
+        data-scene-live="false"
+        style={{ opacity: 0, willChange: "opacity", transform: "translateZ(0)" }}
+      >
+        <ArchBackdrop quality="lite" />
       </div>
     </div>
   );

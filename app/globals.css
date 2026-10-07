@@ -239,4 +239,9 @@ body {
   .invite[data-invite-phase="opened"] .float-layer--butterfly {
     animation: float-butterfly 8s ease-in-out infinite;
   }
+
+  /* iOS shared backdrop: pause float on the nearly-hidden scene (saves GPU). */
+  .ios-backdrop-scene[data-scene-live="false"] .float-layer {
+    animation: none !important;
+  }
 }
