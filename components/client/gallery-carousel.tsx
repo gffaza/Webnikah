@@ -8,8 +8,10 @@ import { photoBlurDataURL } from "@/lib/image-blur";
 const ASPECT = "260/163";
 
 export function GalleryCarousel({ photos }: { photos: GalleryPhoto[] }) {
+  const rootRef = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
   const paused = useRef(false);
+  const inView = useRef(true);
   const [index, setIndex] = useState(0);
   const count = photos.length;
 
@@ -32,12 +34,25 @@ export function GalleryCarousel({ photos }: { photos: GalleryPhoto[] }) {
   }, []);
 
   useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        inView.current = Boolean(entry?.isIntersecting);
+      },
+      { rootMargin: "40% 0px", threshold: 0 },
+    );
+    io.observe(root);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
     if (count < 2) return;
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (media.matches) return;
 
     const id = window.setInterval(() => {
-      if (paused.current || document.hidden) return;
+      if (paused.current || !inView.current || document.hidden) return;
       const el = scroller.current;
       if (!el || el.clientWidth === 0) return;
       const current = Math.round(el.scrollLeft / el.clientWidth);
@@ -52,6 +67,7 @@ export function GalleryCarousel({ photos }: { photos: GalleryPhoto[] }) {
 
   return (
     <div
+      ref={rootRef}
       className="relative"
       role="region"
       aria-roledescription="carousel"

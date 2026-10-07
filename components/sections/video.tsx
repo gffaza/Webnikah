@@ -1,3 +1,4 @@
+import { YoutubeLite } from "@/components/client/youtube-lite";
 import { Section } from "@/components/section";
 import { wedding } from "@/content/wedding";
 
@@ -33,15 +34,7 @@ export function Video() {
 
       {youtubeId ? (
         <div className="reveal mt-64 w-full max-w-560">
-          <iframe
-            src={`https://www.youtube-nocookie.com/embed/${youtubeId}`}
-            title="Video prewedding"
-            loading="lazy"
-            allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-            className="aspect-[9/16] w-full rounded-card shadow-md"
-          />
+          <YoutubeLite id={youtubeId} title="Video prewedding" />
         </div>
       ) : (
         <div className="reveal mt-64 flex aspect-[9/16] w-full max-w-560 flex-col items-center justify-center gap-16 rounded-card border-2 border-dashed border-rose/40 bg-white/40 text-rose">

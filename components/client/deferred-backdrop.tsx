@@ -5,9 +5,15 @@ import { ArchBackdrop, FloralBackdrop } from "@/components/backdrop";
 
 export type BackdropType = "floral" | "arch";
 
+/** Keep scene ~1 viewport ahead so scroll-in still looks full quality. */
+const NEAR_MARGIN = "80% 0px";
+/** Avoid flicker when IO briefly flips during bounce / fast scroll. */
+const UNMOUNT_DELAY_MS = 450;
+
 /**
- * Mounts backdrops when the section nears the viewport.
- * Cover uses `eager`; offscreen sections stay tinted until needed.
+ * Full layered scene only while the section is near the viewport.
+ * Far sections keep a cheap tint — same look when you arrive, less iOS memory.
+ * Cover still starts eager for first paint, then unmounts once scrolled away.
  */
 export function DeferredBackdrop({
   type,
@@ -18,25 +24,42 @@ export function DeferredBackdrop({
 }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(eager);
+  const unmountTimer = useRef<number | null>(null);
   const tint = "#f5f2f2";
 
   useEffect(() => {
-    if (active) return;
     const host = hostRef.current;
     if (!host) return;
 
+    const clearUnmount = () => {
+      if (unmountTimer.current == null) return;
+      window.clearTimeout(unmountTimer.current);
+      unmountTimer.current = null;
+    };
+
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (!entry?.isIntersecting) return;
-        setActive(true);
-        io.disconnect();
+        if (!entry) return;
+        if (entry.isIntersecting) {
+          clearUnmount();
+          setActive(true);
+          return;
+        }
+        clearUnmount();
+        unmountTimer.current = window.setTimeout(() => {
+          setActive(false);
+          unmountTimer.current = null;
+        }, UNMOUNT_DELAY_MS);
       },
-      // Start fetching ~1.5 viewports ahead so layers are ready before scroll lands.
-      { rootMargin: "150% 0px", threshold: 0 },
+      { rootMargin: NEAR_MARGIN, threshold: 0 },
     );
+
     io.observe(host);
-    return () => io.disconnect();
-  }, [active]);
+    return () => {
+      io.disconnect();
+      clearUnmount();
+    };
+  }, []);
 
   let scene: ReactNode = null;
   if (active) {
@@ -54,6 +77,7 @@ export function DeferredBackdrop({
       aria-hidden
       className="absolute inset-0 -z-20"
       style={{ backgroundColor: tint }}
+      data-backdrop-live={active ? "true" : "false"}
     >
       {scene}
     </div>
