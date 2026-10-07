@@ -109,7 +109,7 @@ export const wedding: Wedding = {
   venue: {
     address: "Sidorejo, Lendah, Kulon Progo, Daerah Istimewa Yogyakarta",
     mapsUrl:
-      "https://www.google.com/maps/search/?api=1&query=Sidorejo%2C+Lendah%2C+Kulon+Progo",
+      "https://maps.app.goo.gl/Sc5DEPXSJ1kZY6jZ7",
   },
   youtubeId: "zxZhcQLBDA8",
   story: {
