@@ -25,8 +25,9 @@ const img = {
 const ARCH_PILL =
   "M954.615 495.562V1424.59C954.615 1650.37 771.62 1833.33 545.776 1833.33C320.104 1833.33 137.036 1650.37 137.036 1424.59V495.562C137.036 269.786 320 86.8281 545.776 86.8281C771.516 86.8281 954.615 269.786 954.615 495.562Z";
 
-const LAYER_SIZES = "(max-width: 480px) 94vw, 450px";
-const FILL_SIZES = "(max-width: 480px) 100vw, 480px";
+/** Cap decode size — Retina 3× of 94vw was blowing Safari image memory. */
+const LAYER_SIZES = "360px";
+const FILL_SIZES = "420px";
 
 function Layer({
   src,

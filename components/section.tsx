@@ -1,8 +1,5 @@
 import type { ReactNode } from "react";
-import {
-  DeferredBackdrop,
-  type BackdropType,
-} from "@/components/client/deferred-backdrop";
+import type { BackdropType } from "@/components/client/deferred-backdrop";
 
 type Panel =
   /** Rounded translucent card used on most frames (Rectangle 17/18 in Figma). */
@@ -26,13 +23,13 @@ export function Section({
   id,
   panel = "card",
   background = "floral",
-  preload = false,
   className = "",
   children,
 }: {
   id: string;
   panel?: Panel;
   background?: BackdropType;
+  /** @deprecated Shared backdrop handles loading; kept so call sites typecheck during migrate. */
   preload?: boolean;
   className?: string;
   children: ReactNode;
@@ -40,9 +37,9 @@ export function Section({
   return (
     <section
       id={id}
+      data-backdrop={background}
       className="relative isolate flex min-h-[var(--invite-frame-min-h)] flex-col overflow-hidden"
     >
-      <DeferredBackdrop type={background} eager={preload} />
       {panel !== "none" && (
         <div aria-hidden className={`absolute -z-10 ${panelClass[panel]}`} />
       )}
