@@ -6,9 +6,18 @@ import { useState } from "react";
  * Thumbnail first — YouTube iframe only after tap.
  * Avoids Safari/WebKit carrying a heavy player while the guest scrolls.
  */
-export function YoutubeLite({ id, title }: { id: string; title: string }) {
+export function YoutubeLite({
+  id,
+  title,
+  className = "aspect-[9/16] w-full",
+}: {
+  id: string;
+  title: string;
+  className?: string;
+}) {
   const [playing, setPlaying] = useState(false);
   const thumb = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+  const shell = `rounded-card shadow-md ${className}`;
 
   if (playing) {
     return (
@@ -18,7 +27,7 @@ export function YoutubeLite({ id, title }: { id: string; title: string }) {
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerPolicy="strict-origin-when-cross-origin"
         allowFullScreen
-        className="aspect-[9/16] w-full rounded-card shadow-md"
+        className={shell}
       />
     );
   }
@@ -27,7 +36,7 @@ export function YoutubeLite({ id, title }: { id: string; title: string }) {
     <button
       type="button"
       onClick={() => setPlaying(true)}
-      className="group relative block aspect-[9/16] w-full overflow-hidden rounded-card shadow-md focus-visible:outline-2 focus-visible:outline-rose"
+      className={`group relative block overflow-hidden focus-visible:outline-2 focus-visible:outline-rose ${shell}`}
       aria-label={`Putar ${title}`}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
