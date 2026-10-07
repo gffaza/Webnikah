@@ -96,11 +96,53 @@ body {
   }
 }
 
+@keyframes invite-reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Covers SSR paint until the gate sets data-invite-phase (hydration). */
+.invite[data-invite-phase] > .invite-boot-veil {
+  display: none;
+}
+
+.invite-loader-glow {
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 35%, rgb(200 106 115 / 0.14), transparent 70%),
+    radial-gradient(ellipse 70% 50% at 50% 100%, rgb(232 165 151 / 0.18), transparent 65%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .invite-loader-glow {
+    animation: invite-loader-breathe 4.5s ease-in-out infinite;
+  }
+}
+
+@keyframes invite-loader-breathe {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
 /* Soft settle on the cover while the opening beat runs (no video overlay). */
 .invite[data-invite-phase="cinematic"] .cover-ui {
   opacity: 0.72;
   transition: opacity 0.7s ease;
   pointer-events: none;
+}
+
+.invite[data-invite-phase="loading"] {
+  min-height: 100dvh;
 }
 
 .invite .cover-ui {

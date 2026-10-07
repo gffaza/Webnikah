@@ -14,6 +14,18 @@ import { wedding } from "@/content/wedding";
 export default function Home() {
   return (
     <main className="invite mx-auto w-full max-w-[480px] overflow-x-clip bg-cream shadow-2xl">
+      {/*
+        Static boot veil: covers the SSR paint until InvitationGate hydrates and
+        InviteLoader takes over. Removed via CSS once data-invite-phase is set.
+        noscript keeps the invite usable when JS never loads.
+      */}
+      <noscript>
+        <style>{`.invite-boot-veil{display:none!important}`}</style>
+      </noscript>
+      <div
+        className="invite-boot-veil pointer-events-none fixed top-0 left-1/2 z-[55] h-dvh w-full max-w-[480px] -translate-x-1/2 bg-[#f3e6df]"
+        aria-hidden
+      />
       <InvitationGate music={wedding.music} scrollTo="intro">
         <Cover />
         <Intro />

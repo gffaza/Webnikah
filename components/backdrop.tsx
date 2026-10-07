@@ -8,6 +8,9 @@ import type { ReactNode } from "react";
  * Do NOT reference the Figma SVGs directly as <img>:
  * their width/height attrs are tiny (e.g. 353×283) while embeds are ~1462px.
  * Chrome rasterizes at the SVG attrs size then upscales → soft/jagged edges.
+ *
+ * Images go through the Next optimizer (no `unoptimized`) with a phone-sized
+ * `sizes` hint so iOS Safari decodes ~480–960px assets instead of full PNGs.
  */
 
 const img = {
@@ -21,6 +24,10 @@ const img = {
   hangingVine: "/images/parts/hanging-vine.svg",
   gunungan: "/images/parts/gunungan-raster.webp",
 } as const;
+
+/** Invite column maxes at 480px; layers are % of that width. */
+const LAYER_SIZES = "(max-width: 480px) 94vw, 450px";
+const FILL_SIZES = "(max-width: 480px) 100vw, 480px";
 
 function Layer({
   src,
@@ -56,7 +63,7 @@ function Layer({
         alt=""
         aria-hidden
         fill
-        unoptimized
+        sizes={FILL_SIZES}
         preload={preload}
         className={`pointer-events-none absolute select-none object-cover object-center ${className}`}
       />
@@ -70,7 +77,7 @@ function Layer({
       aria-hidden
       width={width!}
       height={height!}
-      unoptimized
+      sizes={LAYER_SIZES}
       preload={preload}
       className={`pointer-events-none absolute select-none ${className}`}
     />
@@ -104,6 +111,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           src={img.faintVine}
           width={1892}
           height={1501}
+          preload={preload}
           className="top-[2%] left-[-10%] w-[65%] opacity-60"
         />
       </Float>
@@ -112,6 +120,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           src={img.faintVine}
           width={1892}
           height={1501}
+          preload={preload}
           className="top-[2%] right-[-10%] w-[65%] -scale-x-100 opacity-60"
         />
       </Float>
@@ -121,6 +130,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           src={img.gunungan}
           width={800}
           height={900}
+          preload={preload}
           className="top-[26%] left-1/2 w-[78%] -translate-x-1/2 opacity-45 mix-blend-multiply"
         />
       </Float>
@@ -130,6 +140,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           src={img.joglo}
           width={2400}
           height={1488}
+          preload={preload}
           className="bottom-[1%] left-1/2 w-[94%] -translate-x-1/2"
         />
       </Float>
@@ -139,6 +150,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           src={img.lilies}
           width={1751}
           height={1800}
+          preload={preload}
           className="bottom-[-3%] left-[-20%] w-[62%]"
         />
       </Float>
@@ -147,6 +159,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           src={img.lilies}
           width={1751}
           height={1800}
+          preload={preload}
           className="right-[-20%] bottom-[-3%] w-[62%] -scale-x-100"
         />
       </Float>
@@ -156,6 +169,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           src={img.sideButterfly}
           width={860}
           height={975}
+          preload={preload}
           className="bottom-[17%] left-[1%] w-[17%]"
         />
       </Float>
@@ -164,6 +178,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           src={img.sideButterfly}
           width={860}
           height={975}
+          preload={preload}
           className="right-[1%] bottom-[17%] w-[17%] -scale-x-100"
         />
       </Float>
@@ -189,7 +204,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
 }
 
 /** Arch scene — layout aligned with public/7.svg */
-export function ArchBackdrop() {
+export function ArchBackdrop({ preload = false }: { preload?: boolean }) {
   return (
     <div aria-hidden className="absolute inset-0 -z-20 overflow-hidden bg-[#f8f4f0]">
       <Float variant="a">
@@ -197,6 +212,7 @@ export function ArchBackdrop() {
           src={img.faintVine}
           width={1892}
           height={1501}
+          preload={preload}
           className="top-[5%] left-[-14%] w-[58%] opacity-45"
         />
       </Float>
@@ -205,6 +221,7 @@ export function ArchBackdrop() {
           src={img.faintVine}
           width={1892}
           height={1501}
+          preload={preload}
           className="top-[5%] right-[-14%] w-[58%] -scale-x-100 opacity-45"
         />
       </Float>
@@ -216,6 +233,7 @@ export function ArchBackdrop() {
           src={img.gunungan}
           width={800}
           height={900}
+          preload={preload}
           className="top-[16%] left-1/2 w-[70%] -translate-x-1/2 opacity-40 mix-blend-multiply"
         />
       </Float>
@@ -225,6 +243,7 @@ export function ArchBackdrop() {
           src={img.flowerVine}
           width={1163}
           height={2150}
+          preload={preload}
           className="top-[7%] left-[6%] w-[24%] -rotate-[6deg]"
         />
       </Float>
@@ -233,6 +252,7 @@ export function ArchBackdrop() {
           src={img.flowerVine}
           width={1163}
           height={2150}
+          preload={preload}
           className="top-[7%] right-[6%] w-[24%] rotate-[6deg] -scale-x-100"
         />
       </Float>
@@ -242,6 +262,7 @@ export function ArchBackdrop() {
           src={img.lilies}
           width={1751}
           height={1800}
+          preload={preload}
           className="bottom-[-2%] left-[-16%] w-[55%]"
         />
       </Float>
@@ -250,6 +271,7 @@ export function ArchBackdrop() {
           src={img.lilies}
           width={1751}
           height={1800}
+          preload={preload}
           className="right-[-16%] bottom-[-2%] w-[55%] -scale-x-100"
         />
       </Float>
@@ -259,6 +281,7 @@ export function ArchBackdrop() {
           src={img.pinkButterfly}
           width={1462}
           height={1170}
+          preload={preload}
           className="top-[1%] left-1/2 w-[32%] -translate-x-1/2"
         />
       </Float>

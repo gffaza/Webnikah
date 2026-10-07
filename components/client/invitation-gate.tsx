@@ -5,13 +5,15 @@ import {
   use,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   type ReactNode,
 } from "react";
+import { InviteLoader } from "@/components/client/invite-loader";
 import { OpeningCinematic } from "@/components/client/opening-cinematic";
 
-type Phase = "locked" | "cinematic" | "opened";
+type Phase = "loading" | "locked" | "cinematic" | "opened";
 
 type Gate = {
   phase: Phase;
@@ -23,17 +25,55 @@ type Gate = {
 
 const GateContext = createContext<Gate | null>(null);
 
+/** Survives Safari tab reloads within the same session (iOS memory kills). */
+const OPENED_KEY = "webnikah-invite-opened";
+
 function useGate() {
   const gate = use(GateContext);
   if (!gate) throw new Error("useGate must be used inside <InvitationGate>");
   return gate;
 }
 
+function readOpened(): boolean {
+  try {
+    return sessionStorage.getItem(OPENED_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function writeOpened() {
+  try {
+    sessionStorage.setItem(OPENED_KEY, "1");
+  } catch {
+    /* private mode / quota — ignore */
+  }
+}
+
+/** iOS Safari needs both html + body cleared; overflow on html alone can stick. */
+function lockScroll() {
+  const { documentElement: root, body } = document;
+  root.style.overflow = "hidden";
+  body.style.overflow = "hidden";
+  body.style.touchAction = "none";
+  body.style.overscrollBehavior = "none";
+}
+
+function unlockScroll() {
+  const { documentElement: root, body } = document;
+  root.style.overflow = "";
+  body.style.overflow = "";
+  body.style.touchAction = "";
+  body.style.overscrollBehavior = "";
+}
+
 /**
- * Locks scrolling until the guest taps "Buka Undangan".
+ * Boots behind a full-screen loader until invite assets are cached,
+ * then locks scrolling until the guest taps "Buka Undangan".
  * Starts music on the gesture, holds a short living-backdrop beat, then unlocks + scrolls.
  * Browsers only allow audio playback after a user gesture, so the button is the trigger.
  * The lock is applied from JS, so the page stays scrollable if JS never loads.
+ * Opened state is persisted in sessionStorage so an iOS memory-reload does not re-lock.
  */
 export function InvitationGate({
   music,
@@ -45,26 +85,40 @@ export function InvitationGate({
   children: ReactNode;
 }) {
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [phase, setPhase] = useState<Phase>("locked");
+  const [phase, setPhase] = useState<Phase>("loading");
+  const [bootstrapped, setBootstrapped] = useState(false);
   const [playing, setPlaying] = useState(false);
   const opened = phase === "opened";
+  const loading = bootstrapped && phase === "loading";
 
+  // Restore after Safari soft-reload before applying the scroll lock / asset loader.
   useEffect(() => {
+    if (readOpened()) setPhase("opened");
+    setBootstrapped(true);
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!bootstrapped) return;
     const invite = document.querySelector(".invite");
     invite?.setAttribute("data-invite-phase", phase);
     return () => {
       invite?.removeAttribute("data-invite-phase");
     };
-  }, [phase]);
+  }, [phase, bootstrapped]);
 
   useEffect(() => {
-    if (opened) return;
-    const root = document.documentElement;
-    root.style.overflow = "hidden";
-    return () => {
-      root.style.overflow = "";
-    };
-  }, [opened]);
+    if (!bootstrapped) return;
+    if (opened) {
+      unlockScroll();
+      return;
+    }
+    lockScroll();
+    return unlockScroll;
+  }, [opened, bootstrapped]);
+
+  const finishLoading = useCallback(() => {
+    setPhase((current) => (current === "loading" ? "locked" : current));
+  }, []);
 
   const play = useCallback(() => {
     audioRef.current?.play().then(
@@ -80,6 +134,7 @@ export function InvitationGate({
   }, [phase, play]);
 
   const finishCinematic = useCallback(() => {
+    writeOpened();
     setPhase("opened");
     requestAnimationFrame(() => {
       document.getElementById(scrollTo)?.scrollIntoView({ behavior: "smooth" });
@@ -99,15 +154,30 @@ export function InvitationGate({
 
   return (
     <GateContext value={{ phase, opened, playing, open, toggleMusic }}>
-      {children}
+      {/* Keep the invite mounted under the loader so <img> nodes decode into cache. */}
+      <div
+        className={
+          loading
+            ? "pointer-events-none select-none"
+            : phase !== "loading"
+              ? "animate-[invite-reveal_0.55s_ease-out]"
+              : undefined
+        }
+        aria-hidden={loading || undefined}
+      >
+        {children}
+      </div>
+      {loading ? <InviteLoader onReady={finishLoading} /> : null}
       {phase === "cinematic" ? <OpeningCinematic onComplete={finishCinematic} /> : null}
-      <audio ref={audioRef} src={music} loop preload="none" />
+      <audio ref={audioRef} src={music} loop preload="auto" />
     </GateContext>
   );
 }
 
 export function OpenInvitationButton({ children }: { children: ReactNode }) {
   const { open, phase } = useGate();
+  if (phase === "opened") return null;
+
   return (
     <button
       type="button"

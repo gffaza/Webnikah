@@ -20,7 +20,7 @@ export function Cover() {
           alt=""
           width={1462}
           height={1170}
-          unoptimized
+          sizes="(max-width: 480px) 36vw, 173px"
           preload
           className="absolute top-40 left-1/2 w-[36%] -translate-x-1/2 select-none"
         />

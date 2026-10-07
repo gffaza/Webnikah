@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { ArchBackdrop, FloralBackdrop } from "@/components/backdrop";
+import { DeferredBackdrop } from "@/components/client/deferred-backdrop";
 
 type Panel =
   /** Rounded translucent card used on most frames (Rectangle 17/18 in Figma). */
@@ -42,11 +42,7 @@ export function Section({
       id={id}
       className="relative isolate flex min-h-[var(--invite-frame-min-h)] flex-col overflow-hidden"
     >
-      {background === "arch" ? (
-        <ArchBackdrop />
-      ) : (
-        <FloralBackdrop preload={preload} />
-      )}
+      <DeferredBackdrop type={background} eager={preload} />
       {panel !== "none" && (
         <div aria-hidden className={`absolute -z-10 ${panelClass[panel]}`} />
       )}
