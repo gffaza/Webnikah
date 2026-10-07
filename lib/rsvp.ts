@@ -3,7 +3,6 @@ import { z } from "zod";
 export const attendanceOptions = [
   { value: "hadir", label: "Hadir" },
   { value: "tidak_hadir", label: "Tidak Hadir" },
-  { value: "ragu", label: "Masih Ragu" },
 ] as const;
 
 export type Attendance = (typeof attendanceOptions)[number]["value"];

@@ -86,20 +86,6 @@ export function RsvpForm() {
       </fieldset>
 
       <div>
-        <label htmlFor="rsvp-guests" className="mb-8 block text-body font-bold text-ink">
-          Jumlah Tamu
-        </label>
-        <select id="rsvp-guests" name="guests" defaultValue="1" className={fieldClass}>
-          {[1, 2, 3, 4, 5].map((count) => (
-            <option key={count} value={count}>
-              {count} orang
-            </option>
-          ))}
-        </select>
-        <FieldError errors={fieldErrors?.guests} />
-      </div>
-
-      <div>
         <label htmlFor="rsvp-message" className="mb-8 block text-body font-bold text-ink">
           Ucapan & Doa
         </label>

@@ -76,13 +76,13 @@ export const wedding: Wedding = {
     nickname: "Ayu",
     fullName: "Cahya Ayu Lestari",
     parents: "Putri dari Bapak Nama Ayah & Ibu Nama Ibu",
-    photo: "/images/bride.webp",
+    photo: "/galery/bride.jpg",
   },
   groom: {
     nickname: "Faza",
     fullName: "Ghilman Faza",
     parents: "Putra dari Bapak Nama Ayah & Ibu Nama Ibu",
-    photo: "/images/groom.webp",
+    photo: "/galery/groom.jpg",
   },
   startsAt: "2026-12-19T08:00:00+07:00",
   dateLabel: {
@@ -94,7 +94,7 @@ export const wedding: Wedding = {
   city: "Yogyakarta",
   defaultGuest: "Tamu Undangan",
   intro: {
-    photo: "/images/intro.webp",
+    photo: "/galery/intro.jpg",
     title: "With Love",
     quote:
       "“Dialah yang menciptakan kamu dari satu jiwa dan darinya Dia menciptakan pasangannya, agar dia merasa tenteram kepadanya.”",
@@ -111,9 +111,9 @@ export const wedding: Wedding = {
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Sidorejo%2C+Lendah%2C+Kulon+Progo",
   },
-  youtubeId: "",
+  youtubeId: "https://youtube.com/shorts/zxZhcQLBDA8?feature=share",
   story: {
-    photo: "/images/story.webp",
+    photo: "/galery/ourstory.jpg",
     items: [
       {
         title: "Awal Bertemu",
@@ -133,11 +133,11 @@ export const wedding: Wedding = {
     ],
   },
   gallery: [
-    { src: "/images/gallery-1.webp", alt: "Ayu dan Faza di depan rumah joglo" },
-    { src: "/images/gallery-2.webp", alt: "Faza berbusana adat" },
-    { src: "/images/gallery-3.webp", alt: "Ayu di taman" },
-    { src: "/images/gallery-4.webp", alt: "Ayu dan Faza di tangga" },
-    { src: "/images/gallery-5.webp", alt: "Ayu dan Faza berdampingan" },
+    { src: "/galery/galery3.jpg", alt: "Ayu dan Faza di depan rumah joglo" },
+    { src: "/galery/galery1.jpg", alt: "Faza berbusana adat" },
+    { src: "/galery/galery2.jpg", alt: "Ayu di taman" },
+    { src: "/galery/galery4.jpg", alt: "Ayu dan Faza di tangga" },
+    { src: "/galery/slide1.jpg", alt: "Ayu dan Faza berdampingan" },
   ],
   gift: {
     text: "Doa Restu Anda merupakan karunia yang sangat berarti bagi kami. Dan jika memberi adalah ungkapan tanda kasih Anda. Anda dapat memberi kado secara cashless.",
@@ -158,7 +158,7 @@ export const wedding: Wedding = {
     ],
   },
   closing: {
-    photo: "/images/closing.webp",
+    photo: "/galery/end.jpg",
     text: "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila berkenan hadir dan memberikan doa restunya untuk pernikahan kami. Atas doa & restunya, kami ucapkan terima kasih.",
   },
   music: "/audio/backsoundjava.weba",
