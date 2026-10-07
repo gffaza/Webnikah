@@ -28,7 +28,7 @@ export default function Home() {
         className="invite-boot-veil pointer-events-none fixed top-0 left-1/2 z-[55] h-dvh w-full max-w-[480px] -translate-x-1/2 bg-[#f3e6df]"
         aria-hidden
       />
-      {/* Single layered scene — floral/arch swap; avoids N copies OOMing iOS Safari. */}
+      {/* iOS only: one lite scene. Android/desktop use rich per-section backdrops. */}
       <SharedInviteBackdrop />
       <div className="relative z-[1]">
         <InvitationGate music={wedding.music} scrollTo="intro">

@@ -25,9 +25,19 @@ const img = {
 const ARCH_PILL =
   "M954.615 495.562V1424.59C954.615 1650.37 771.62 1833.33 545.776 1833.33C320.104 1833.33 137.036 1650.37 137.036 1424.59V495.562C137.036 269.786 320 86.8281 545.776 86.8281C771.516 86.8281 954.615 269.786 954.615 495.562Z";
 
-/** Cap decode size — Retina 3× of 94vw was blowing Safari image memory. */
-const LAYER_SIZES = "360px";
-const FILL_SIZES = "420px";
+export type BackdropQuality = "rich" | "lite";
+
+/** `lite` caps decode for iOS; `rich` keeps full Retina fidelity elsewhere. */
+const SIZES: Record<BackdropQuality, { layer: string; fill: string }> = {
+  rich: {
+    layer: "(max-width: 480px) 94vw, 450px",
+    fill: "(max-width: 480px) 100vw, 480px",
+  },
+  lite: {
+    layer: "360px",
+    fill: "420px",
+  },
+};
 
 function Layer({
   src,
@@ -36,6 +46,7 @@ function Layer({
   className,
   preload = false,
   fill = false,
+  quality = "rich",
 }: {
   src: string;
   width?: number;
@@ -43,7 +54,10 @@ function Layer({
   className: string;
   preload?: boolean;
   fill?: boolean;
+  quality?: BackdropQuality;
 }) {
+  const sizes = SIZES[quality];
+
   if (src.endsWith(".svg")) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
@@ -63,7 +77,7 @@ function Layer({
         alt=""
         aria-hidden
         fill
-        sizes={FILL_SIZES}
+        sizes={sizes.fill}
         preload={preload}
         className={`pointer-events-none absolute select-none object-cover object-center ${className}`}
       />
@@ -77,7 +91,7 @@ function Layer({
       aria-hidden
       width={width!}
       height={height!}
-      sizes={LAYER_SIZES}
+      sizes={sizes.layer}
       preload={preload}
       className={`pointer-events-none absolute h-auto select-none ${className}`}
     />
@@ -143,10 +157,22 @@ function ArchPart({
 }
 
 /** Floral scene — joglo + lilies + side butterflies */
-export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
+export function FloralBackdrop({
+  preload = false,
+  quality = "rich",
+}: {
+  preload?: boolean;
+  quality?: BackdropQuality;
+}) {
   return (
     <div aria-hidden className="absolute inset-0 overflow-hidden bg-[#f5f2f2]">
-      <Layer src={img.floralFrame} fill preload={preload} className="inset-0" />
+      <Layer
+        src={img.floralFrame}
+        fill
+        preload={preload}
+        quality={quality}
+        className="inset-0"
+      />
 
       <Float variant="a">
         <Layer
@@ -154,6 +180,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           width={800}
           height={635}
           preload={preload}
+          quality={quality}
           className="top-[2%] left-[-10%] w-[65%] opacity-60"
         />
       </Float>
@@ -163,6 +190,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           width={800}
           height={635}
           preload={preload}
+          quality={quality}
           className="top-[2%] right-[-10%] w-[65%] -scale-x-100 opacity-60"
         />
       </Float>
@@ -173,6 +201,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           width={720}
           height={974}
           preload={preload}
+          quality={quality}
           className="top-[18%] left-1/2 w-[72%] -translate-x-1/2 opacity-40"
         />
       </Float>
@@ -183,6 +212,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           width={1000}
           height={620}
           preload={preload}
+          quality={quality}
           className="bottom-[1%] left-1/2 w-[94%] -translate-x-1/2"
         />
       </Float>
@@ -193,6 +223,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           width={900}
           height={925}
           preload={preload}
+          quality={quality}
           className="bottom-[-3%] left-[-20%] w-[62%]"
         />
       </Float>
@@ -202,6 +233,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           width={900}
           height={925}
           preload={preload}
+          quality={quality}
           className="right-[-20%] bottom-[-3%] w-[62%] -scale-x-100"
         />
       </Float>
@@ -212,6 +244,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           width={420}
           height={476}
           preload={preload}
+          quality={quality}
           className="bottom-[17%] left-[1%] w-[17%]"
         />
       </Float>
@@ -221,6 +254,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           width={420}
           height={476}
           preload={preload}
+          quality={quality}
           className="right-[1%] bottom-[17%] w-[17%] -scale-x-100"
         />
       </Float>
@@ -230,6 +264,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           src={img.hangingVine}
           width={604}
           height={611}
+          quality={quality}
           className="top-[0%] left-[8%] w-[28%] -rotate-6"
         />
       </Float>
@@ -238,6 +273,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           src={img.hangingVine}
           width={604}
           height={611}
+          quality={quality}
           className="top-[0%] right-[8%] w-[28%] rotate-6 -scale-x-100"
         />
       </Float>
@@ -248,6 +284,7 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
           width={640}
           height={512}
           preload={preload}
+          quality={quality}
           className="top-[1%] left-1/2 w-[32%] -translate-x-1/2"
         />
       </Float>
@@ -260,7 +297,13 @@ export function FloralBackdrop({ preload = false }: { preload?: boolean }) {
  * Each vine / lily / butterfly floats independently (same system as floral).
  * No Frame 31/34 mockups → no stacked text.
  */
-export function ArchBackdrop({ preload: _preload = false }: { preload?: boolean }) {
+export function ArchBackdrop({
+  preload: _preload = false,
+  quality: _quality = "rich",
+}: {
+  preload?: boolean;
+  quality?: BackdropQuality;
+}) {
   return (
     <div aria-hidden className="absolute inset-0 overflow-hidden bg-[#f5f2f2]">
       <svg
