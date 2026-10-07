@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { GalleryCarousel } from "@/components/client/gallery-carousel";
 import { Section } from "@/components/section";
+import { photoBlurDataURL } from "@/lib/image-blur";
 import { wedding, type GalleryPhoto } from "@/content/wedding";
 
 /** Aspect ratios of the four grid slots above the wide carousel, in reading order. */
@@ -21,11 +22,21 @@ function Photo({ photo, id, aspect }: { photo: GalleryPhoto; id: string; aspect:
           alt={photo.alt}
           fill
           sizes="(max-width: 480px) 36vw, 175px"
+          placeholder="blur"
+          blurDataURL={photoBlurDataURL}
           className="object-cover transition duration-500 hover:scale-105"
         />
       </button>
       <div id={id} popover="auto" className="h-[85vh] w-[92vw] max-w-[640px]">
-        <Image src={photo.src} alt={photo.alt} fill sizes="92vw" className="object-contain" />
+        <Image
+          src={photo.src}
+          alt={photo.alt}
+          fill
+          sizes="92vw"
+          placeholder="blur"
+          blurDataURL={photoBlurDataURL}
+          className="object-contain"
+        />
         <button
           type="button"
           popoverTarget={id}

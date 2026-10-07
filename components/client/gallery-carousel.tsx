@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { GalleryPhoto } from "@/content/wedding";
+import { photoBlurDataURL } from "@/lib/image-blur";
 
 const ASPECT = "260/163";
 
@@ -86,6 +87,8 @@ export function GalleryCarousel({ photos }: { photos: GalleryPhoto[] }) {
                 alt={photo.alt}
                 fill
                 sizes="(max-width: 480px) 80vw, 420px"
+                placeholder="blur"
+                blurDataURL={photoBlurDataURL}
                 className="object-cover"
                 draggable={false}
               />
@@ -141,7 +144,15 @@ export function GalleryCarousel({ photos }: { photos: GalleryPhoto[] }) {
         const id = `foto-slide-${i + 1}`;
         return (
           <div key={id} id={id} popover="auto" className="h-[85vh] w-[92vw] max-w-[640px]">
-            <Image src={photo.src} alt={photo.alt} fill sizes="92vw" className="object-contain" />
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              fill
+              sizes="92vw"
+              placeholder="blur"
+              blurDataURL={photoBlurDataURL}
+              className="object-contain"
+            />
             <button
               type="button"
               popoverTarget={id}

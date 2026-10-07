@@ -31,7 +31,8 @@ export function DeferredBackdrop({
         setActive(true);
         io.disconnect();
       },
-      { rootMargin: "100% 0px", threshold: 0 },
+      // Start fetching ~1.5 viewports ahead so layers are ready before scroll lands.
+      { rootMargin: "150% 0px", threshold: 0 },
     );
     io.observe(host);
     return () => io.disconnect();

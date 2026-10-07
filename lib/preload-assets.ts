@@ -1,37 +1,33 @@
 import { wedding, type Wedding } from "@/content/wedding";
 
-/** Lean WebP layers used on the cover / first paint. */
-export const backdropAssets = [
+/**
+ * Only what the cover needs before "Buka Undangan".
+ * Gallery / couple / gift photos lazy-load via next/image while scrolling.
+ */
+export const coverAssets = [
   "/images/parts/floral-frame.webp",
   "/images/parts/pink-butterfly.webp",
-  "/images/parts/side-butterfly.webp",
   "/images/parts/lilies.webp",
-  "/images/parts/joglo-house.webp",
-  "/images/parts/flower-vine.webp",
   "/images/parts/faint-vine.webp",
-  "/images/parts/hanging-vine.svg",
+  "/images/parts/joglo-house.webp",
   "/images/parts/gunungan.webp",
 ] as const;
 
-/** Every image (and optional audio) the invite should warm before revealing. */
-export function collectInviteAssets(data: Wedding = wedding): string[] {
-  const urls = new Set<string>([
-    ...backdropAssets,
+/** Warm after the gate opens (idle) so scroll feels smoother without blocking splash. */
+export function collectWarmAssets(data: Wedding = wedding): string[] {
+  return [
+    "/images/parts/side-butterfly.webp",
+    "/images/parts/flower-vine.webp",
+    "/images/parts/hanging-vine.svg",
+    data.intro.photo,
     data.bride.photo,
     data.groom.photo,
-    data.intro.photo,
-    data.story.photo,
-    data.closing.photo,
-    data.gift.qris,
-    data.music,
-    ...data.gallery.map((photo) => photo.src),
-    ...data.gift.accounts.map((account) => account.logo),
-  ]);
-  return [...urls];
+  ];
 }
 
-function isAudio(src: string) {
-  return /\.(weba|webm|mp3|ogg|m4a|wav)(\?|$)/i.test(src);
+/** @deprecated use coverAssets — kept name for call sites during refactor */
+export function collectInviteAssets(_data: Wedding = wedding): string[] {
+  return [...coverAssets];
 }
 
 function preloadImage(src: string): Promise<void> {
@@ -50,22 +46,6 @@ function preloadImage(src: string): Promise<void> {
   });
 }
 
-function preloadAudio(src: string): Promise<void> {
-  return new Promise((resolve) => {
-    const audio = new Audio();
-    const done = () => {
-      audio.removeEventListener("canplaythrough", done);
-      audio.removeEventListener("error", done);
-      resolve();
-    };
-    audio.preload = "auto";
-    audio.addEventListener("canplaythrough", done, { once: true });
-    audio.addEventListener("error", done, { once: true });
-    audio.src = src;
-    window.setTimeout(done, 8000);
-  });
-}
-
 export type PreloadProgress = {
   loaded: number;
   total: number;
@@ -73,8 +53,7 @@ export type PreloadProgress = {
 };
 
 /**
- * Warm invite assets into the browser cache, reporting progress.
- * Failures never block reveal — a soft timeout keeps the gate from hanging.
+ * Warm a small asset list into cache. Does not wait on audio/fonts forever.
  */
 export async function preloadInviteAssets(
   assets: string[],
@@ -93,22 +72,23 @@ export async function preloadInviteAssets(
   await Promise.all(
     assets.map(async (src) => {
       try {
-        if (isAudio(src)) {
-          await preloadAudio(src);
-        } else {
-          await preloadImage(src);
-        }
+        await preloadImage(src);
       } finally {
         tick();
       }
     }),
   );
+}
 
-  if (typeof document !== "undefined" && document.fonts?.ready) {
-    try {
-      await document.fonts.ready;
-    } catch {
-      /* ignore */
-    }
+/** Fire-and-forget warm of upcoming sections (after invite is interactive). */
+export function warmUpcomingAssets(data: Wedding = wedding): void {
+  if (typeof window === "undefined") return;
+  const run = () => {
+    void preloadInviteAssets(collectWarmAssets(data));
+  };
+  if (typeof window.requestIdleCallback === "function") {
+    window.requestIdleCallback(run, { timeout: 2500 });
+  } else {
+    window.setTimeout(run, 600);
   }
 }

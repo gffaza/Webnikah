@@ -76,13 +76,13 @@ export const wedding: Wedding = {
     nickname: "Ayu",
     fullName: "Cahya Ayu Lestari",
     parents: "Putri dari Bapak Nama Ayah & Ibu Nama Ibu",
-    photo: "/galery/bride.jpg",
+    photo: "/galery/bride.webp",
   },
   groom: {
     nickname: "Faza",
     fullName: "Ghilman Faza",
     parents: "Putra dari Bapak Nama Ayah & Ibu Nama Ibu",
-    photo: "/galery/groom.jpg",
+    photo: "/galery/groom.webp",
   },
   startsAt: "2026-12-19T08:00:00+07:00",
   dateLabel: {
@@ -94,7 +94,7 @@ export const wedding: Wedding = {
   city: "Yogyakarta",
   defaultGuest: "Tamu Undangan",
   intro: {
-    photo: "/galery/intro.jpg",
+    photo: "/galery/intro.webp",
     title: "With Love",
     quote:
       "“Dialah yang menciptakan kamu dari satu jiwa dan darinya Dia menciptakan pasangannya, agar dia merasa tenteram kepadanya.”",
@@ -113,7 +113,7 @@ export const wedding: Wedding = {
   },
   youtubeId: "zxZhcQLBDA8",
   story: {
-    photo: "/galery/ourstory.jpg",
+    photo: "/galery/ourstory.webp",
     items: [
       {
         title: "Awal Bertemu",
@@ -133,16 +133,16 @@ export const wedding: Wedding = {
     ],
   },
   gallery: [
-    { src: "/galery/galery3.jpg", alt: "Ayu dan Faza di depan rumah joglo" },
-    { src: "/galery/galery1.jpg", alt: "Faza berbusana adat" },
-    { src: "/galery/galery2.jpg", alt: "Ayu di taman" },
-    { src: "/galery/galery4.jpg", alt: "Ayu dan Faza di tangga" },
-    { src: "/galery/slide1.jpg", alt: "Ayu dan Faza berdampingan di ambang pintu" },
-    { src: "/galery/slide2.jpg", alt: "Ayu bersandar di bahu Faza" },
-    { src: "/galery/slide3.jpg", alt: "Ayu dan Faza berpelukan" },
-    { src: "/galery/slide4.jpg", alt: "Ayu memeluk Faza dari belakang" },
-    { src: "/galery/slide5.jpg", alt: "Ayu dan Faza saling tersenyum" },
-    { src: "/galery/slide6.jpg", alt: "Ayu dan Faza di bawah lengkung" },
+    { src: "/galery/galery3.webp", alt: "Ayu dan Faza di depan rumah joglo" },
+    { src: "/galery/galery1.webp", alt: "Faza berbusana adat" },
+    { src: "/galery/galery2.webp", alt: "Ayu di taman" },
+    { src: "/galery/galery4.webp", alt: "Ayu dan Faza di tangga" },
+    { src: "/galery/slide1.webp", alt: "Ayu dan Faza berdampingan di ambang pintu" },
+    { src: "/galery/slide2.webp", alt: "Ayu bersandar di bahu Faza" },
+    { src: "/galery/slide3.webp", alt: "Ayu dan Faza berpelukan" },
+    { src: "/galery/slide4.webp", alt: "Ayu memeluk Faza dari belakang" },
+    { src: "/galery/slide5.webp", alt: "Ayu dan Faza saling tersenyum" },
+    { src: "/galery/slide6.webp", alt: "Ayu dan Faza di bawah lengkung" },
   ],
   gift: {
     text: "Doa Restu Anda merupakan karunia yang sangat berarti bagi kami. Dan jika memberi adalah ungkapan tanda kasih Anda. Anda dapat memberi kado secara cashless.",
@@ -163,7 +163,7 @@ export const wedding: Wedding = {
     ],
   },
   closing: {
-    photo: "/galery/end.jpg",
+    photo: "/galery/end.webp",
     text: "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila berkenan hadir dan memberikan doa restunya untuk pernikahan kami. Atas doa & restunya, kami ucapkan terima kasih.",
   },
   music: "/audio/backsoundjava.weba",

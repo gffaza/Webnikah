@@ -169,7 +169,7 @@ export function InvitationGate({
       </div>
       {loading ? <InviteLoader onReady={finishLoading} /> : null}
       {phase === "cinematic" ? <OpeningCinematic onComplete={finishCinematic} /> : null}
-      <audio ref={audioRef} src={music} loop preload="auto" />
+      <audio ref={audioRef} src={music} loop preload="none" />
     </GateContext>
   );
 }

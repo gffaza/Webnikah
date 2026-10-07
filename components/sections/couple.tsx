@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Section } from "@/components/section";
+import { photoBlurDataURL } from "@/lib/image-blur";
 import { wedding, type Person } from "@/content/wedding";
 
 function CoupleSection({ id, person }: { id: string; person: Person }) {
@@ -13,6 +14,8 @@ function CoupleSection({ id, person }: { id: string; person: Person }) {
           alt={person.fullName}
           fill
           sizes="(max-width: 480px) 74vw, 355px"
+          placeholder="blur"
+          blurDataURL={photoBlurDataURL}
           className="object-cover"
         />
       </div>

@@ -4,15 +4,17 @@ import { useEffect, useEffectEvent, useState } from "react";
 import {
   collectInviteAssets,
   preloadInviteAssets,
+  warmUpcomingAssets,
 } from "@/lib/preload-assets";
 import { wedding } from "@/content/wedding";
 
-const MIN_MS = 900;
-const MAX_MS = 20000;
+/** Keep splash short on real mobile networks — cover assets only. */
+const MIN_MS = 600;
+const MAX_MS = 6000;
 
 /**
- * Full-screen gate while invite assets decode into cache.
- * Children stay mounted underneath so the DOM can also paint once revealed.
+ * Full-screen gate while cover assets decode.
+ * Does not wait on gallery / music (those load after open).
  */
 export function InviteLoader({ onReady }: { onReady: () => void }) {
   const [ratio, setRatio] = useState(0);
@@ -50,7 +52,8 @@ export function InviteLoader({ onReady }: { onReady: () => void }) {
 
   useEffect(() => {
     if (!exiting) return;
-    const id = window.setTimeout(onReady, 520);
+    warmUpcomingAssets(wedding);
+    const id = window.setTimeout(onReady, 420);
     return () => window.clearTimeout(id);
   }, [exiting, onReady]);
 

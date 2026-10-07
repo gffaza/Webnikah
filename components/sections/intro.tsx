@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Section } from "@/components/section";
+import { photoBlurDataURL } from "@/lib/image-blur";
 import { wedding } from "@/content/wedding";
 
 export function Intro() {
@@ -13,6 +14,8 @@ export function Intro() {
           alt={`${wedding.bride.nickname} dan ${wedding.groom.nickname}`}
           fill
           sizes="(max-width: 480px) 65vw, 310px"
+          placeholder="blur"
+          blurDataURL={photoBlurDataURL}
           className="object-cover"
         />
       </div>
