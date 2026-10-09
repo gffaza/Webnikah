@@ -116,7 +116,7 @@ export function SharedInviteBackdrop() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed top-0 left-1/2 z-0 h-dvh w-full max-w-[480px] -translate-x-1/2 overflow-hidden bg-[#f5f2f2]"
+      className="pointer-events-none fixed top-0 left-1/2 z-0 h-svh w-full max-w-[480px] -translate-x-1/2 overflow-hidden bg-[#f5f2f2]"
       data-backdrop-mode="ios-lite"
     >
       <div

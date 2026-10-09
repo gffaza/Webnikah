@@ -52,15 +52,16 @@ body {
   container-type: inline-size;
   /*
    * Frame height: keep the Figma 1080×1920 (9:16) proportion, but never shorter
-   * than the dynamic viewport so tall phones still get one full-screen panel.
-   * 100vh is the fallback; 100dvh tracks mobile browser chrome.
+   * than the small viewport so tall phones still get one full-screen panel.
+   * 100vh is the fallback; 100svh stays stable when mobile browser chrome
+   * shows/hides on scroll (unlike 100dvh which resizes with the UI).
    */
   --invite-frame-min-h: max(calc(100cqw * 16 / 9), 100vh);
 }
 
-@supports (height: 100dvh) {
+@supports (height: 100svh) {
   .invite {
-    --invite-frame-min-h: max(calc(100cqw * 16 / 9), 100dvh);
+    --invite-frame-min-h: max(calc(100cqw * 16 / 9), 100svh);
   }
 }
 
@@ -142,7 +143,7 @@ body {
 }
 
 .invite[data-invite-phase="loading"] {
-  min-height: 100dvh;
+  min-height: 100svh;
 }
 
 .invite .cover-ui {

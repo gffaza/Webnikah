@@ -38,7 +38,7 @@ export function OpeningCinematic({ onComplete }: { onComplete: () => void }) {
 
   return (
     <div
-      className={`pointer-events-none fixed top-0 left-1/2 z-40 h-dvh w-full max-w-[480px] -translate-x-1/2 transition-opacity duration-500 ${
+      className={`pointer-events-none fixed top-0 left-1/2 z-40 h-svh w-full max-w-[480px] -translate-x-1/2 transition-opacity duration-500 ${
         exiting ? "opacity-0" : "opacity-100"
       }`}
       aria-hidden

@@ -61,7 +61,7 @@ export function InviteLoader({ onReady }: { onReady: () => void }) {
 
   return (
     <div
-      className={`fixed top-0 left-1/2 z-[60] flex h-dvh w-full max-w-[480px] -translate-x-1/2 flex-col items-center justify-center bg-[#f3e6df] px-48 transition-opacity duration-500 ${
+      className={`fixed top-0 left-1/2 z-[60] flex h-svh w-full max-w-[480px] -translate-x-1/2 flex-col items-center justify-center bg-[#f3e6df] px-48 transition-opacity duration-500 ${
         exiting ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
       role="status"

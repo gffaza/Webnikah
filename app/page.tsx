@@ -25,7 +25,7 @@ export default function Home() {
         <style>{`.invite-boot-veil{display:none!important}`}</style>
       </noscript>
       <div
-        className="invite-boot-veil pointer-events-none fixed top-0 left-1/2 z-[55] h-dvh w-full max-w-[480px] -translate-x-1/2 bg-[#f3e6df]"
+        className="invite-boot-veil pointer-events-none fixed top-0 left-1/2 z-[55] h-svh w-full max-w-[480px] -translate-x-1/2 bg-[#f3e6df]"
         aria-hidden
       />
       {/* iOS only: one lite scene. Android/desktop use rich per-section backdrops. */}
