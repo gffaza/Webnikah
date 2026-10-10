@@ -98,11 +98,13 @@ function Layer({
   );
 }
 
+type FloatVariant = "a" | "b" | "c" | "d" | "butterfly" | "soft";
+
 function Float({
   variant,
   children,
 }: {
-  variant: "a" | "b" | "c" | "d" | "butterfly";
+  variant: FloatVariant;
   children: ReactNode;
 }) {
   return (
@@ -133,7 +135,7 @@ function ArchPart({
   y?: number;
   transform?: string;
   opacity?: number;
-  float: "a" | "b" | "c" | "d" | "butterfly";
+  float: FloatVariant;
   blend?: "multiply";
   /** Keep intrinsic aspect (gunungan) instead of stretching. */
   meet?: boolean;
@@ -166,13 +168,15 @@ export function FloralBackdrop({
 }) {
   return (
     <div aria-hidden className="absolute inset-0 overflow-hidden bg-[#f5f2f2]">
-      <Layer
-        src={img.floralFrame}
-        fill
-        preload={preload}
-        quality={quality}
-        className="inset-0"
-      />
+      <Float variant="soft">
+        <Layer
+          src={img.floralFrame}
+          fill
+          preload={preload}
+          quality={quality}
+          className="inset-0 scale-[1.04]"
+        />
+      </Float>
 
       <Float variant="a">
         <Layer
@@ -312,8 +316,10 @@ export function ArchBackdrop({
         preserveAspectRatio="xMidYMid slice"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Peach capsule */}
-        <path d={ARCH_PILL} fill="#EFB3A6" />
+        {/* Peach capsule — soft ambient sway with the rest of the scene */}
+        <g className="float-layer float-layer--soft">
+          <path d={ARCH_PILL} fill="#EFB3A6" />
+        </g>
 
         {/* Faint line-art (Frame 38) */}
         <ArchPart

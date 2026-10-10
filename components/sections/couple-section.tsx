@@ -25,9 +25,9 @@ export function CoupleSection({ id }: { id: string }) {
         {bride.fullName}
       </p>
       <p className="reveal mt-12 text-body text-ink">{bride.parents}</p>
-      {/* <h2 className="reveal mt-40 font-script text-4xl leading-tight text-rose">
-        &amp;</h2> */}
-      <div className="reveal relative mt-54 h-400 w-380 overflow-hidden rounded-card shadow-md">
+      <h2 className="reveal mt-32 font-script text-4xl leading-tight text-rose">
+        &amp;</h2>
+      <div className="reveal relative mt-32 h-400 w-380 overflow-hidden rounded-card shadow-md">
         <Image
           src={groom.photo}
           alt={groom.fullName}

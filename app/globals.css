@@ -162,7 +162,7 @@ body {
     transform: translate(0, 0) rotate(0deg);
   }
   50% {
-    transform: translate(1.2%, -1.4%) rotate(-1.2deg);
+    transform: translate(1.8%, -2.0%) rotate(-2.0deg);
   }
 }
 
@@ -172,7 +172,7 @@ body {
     transform: translate(0, 0) rotate(0deg);
   }
   50% {
-    transform: translate(-1.4%, -1%) rotate(1.4deg);
+    transform: translate(-2.0%, -1.8%) rotate(2.0deg);
   }
 }
 
@@ -182,7 +182,7 @@ body {
     transform: translate(0, 0);
   }
   50% {
-    transform: translate(0.8%, -1.8%);
+    transform: translate(1.8%, -2.6%);
   }
 }
 
@@ -192,7 +192,7 @@ body {
     transform: translate(0, 0) rotate(0deg);
   }
   50% {
-    transform: translate(-0.6%, -0.9%) rotate(0.8deg);
+    transform: translate(-1.4%, -1.4%) rotate(1.4deg);
   }
 }
 
@@ -202,43 +202,60 @@ body {
     transform: translate(0, 0) rotate(0deg);
   }
   50% {
-    transform: translate(0, -2.4%) rotate(-2.5deg);
+    transform: translate(0.6%, -3.6%) rotate(-3.6deg);
+  }
+}
+
+/* Full-bleed frame / peach capsule — gentle but readable drift. */
+@keyframes float-sway-soft {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(0.6%, -0.6%) scale(1.006);
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   /* Stronger drift during the opening beat */
   .invite[data-invite-phase="cinematic"] .float-layer--a {
-    animation: float-sway-a 4.5s ease-in-out infinite;
+    animation: float-sway-a 3.6s ease-in-out infinite;
   }
   .invite[data-invite-phase="cinematic"] .float-layer--b {
-    animation: float-sway-b 5.2s ease-in-out infinite;
+    animation: float-sway-b 4s ease-in-out infinite;
   }
   .invite[data-invite-phase="cinematic"] .float-layer--c {
-    animation: float-sway-c 3.8s ease-in-out infinite;
+    animation: float-sway-c 3.2s ease-in-out infinite;
   }
   .invite[data-invite-phase="cinematic"] .float-layer--d {
-    animation: float-sway-d 6s ease-in-out infinite;
+    animation: float-sway-d 4.4s ease-in-out infinite;
   }
   .invite[data-invite-phase="cinematic"] .float-layer--butterfly {
-    animation: float-butterfly 3.2s ease-in-out infinite;
+    animation: float-butterfly 3.6s ease-in-out infinite;
+  }
+  .invite[data-invite-phase="cinematic"] .float-layer--soft {
+    animation: float-sway-soft 5s ease-in-out infinite;
   }
 
-  /* Soft ambient motion after the invite is open */
+  /* Ambient motion after open — faster + wider than before so it reads clearly */
   .invite[data-invite-phase="opened"] .float-layer--a {
-    animation: float-sway-a 11s ease-in-out infinite;
+    animation: float-sway-a 7s ease-in-out infinite;
   }
   .invite[data-invite-phase="opened"] .float-layer--b {
-    animation: float-sway-b 13s ease-in-out infinite;
+    animation: float-sway-b 8s ease-in-out infinite;
   }
   .invite[data-invite-phase="opened"] .float-layer--c {
-    animation: float-sway-c 9s ease-in-out infinite;
+    animation: float-sway-c 6s ease-in-out infinite;
   }
   .invite[data-invite-phase="opened"] .float-layer--d {
-    animation: float-sway-d 15s ease-in-out infinite;
+    animation: float-sway-d 7s ease-in-out infinite;
   }
   .invite[data-invite-phase="opened"] .float-layer--butterfly {
     animation: float-butterfly 8s ease-in-out infinite;
+  }
+  .invite[data-invite-phase="opened"] .float-layer--soft {
+    animation: float-sway-soft 8s ease-in-out infinite;
   }
 
   /* iOS shared backdrop: pause float on the nearly-hidden scene (saves GPU). */
