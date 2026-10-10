@@ -75,13 +75,13 @@ export const wedding: Wedding = {
   bride: {
     nickname: "Ayu",
     fullName: "Cahya Ayu Lestari",
-    parents: "Putri dari Bapak Nama Ayah & Ibu Nama Ibu",
+    parents: "Putri dari Bapak Kabul Wibowo & Ibu Suniasih",
     photo: "/galery/bride.webp",
   },
   groom: {
     nickname: "Faza",
     fullName: "Ghilman Faza",
-    parents: "Putra dari Bapak Nama Ayah & Ibu Nama Ibu",
+    parents: "Putra dari Bapak Teguh Puji Raharjo & Ibu (Almh) Asih Kurniawati",
     photo: "/galery/groom.webp",
   },
   startsAt: "2026-12-19T08:00:00+07:00",
@@ -101,7 +101,7 @@ export const wedding: Wedding = {
     source: "QS. Al-A'raf: 189",
   },
   invitationText:
-    "Assalamualaikum Wr.Wb. Dengan memohon Rahmat & Ridho Allah SWT, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan putra-putri kami",
+    "Assalamualaikum Wr.Wb. Dengan memohon Rahmat & Ridho Allah SWT, kami bermaksud mengundang Bapak / Ibu / Saudara/i untuk menghadiri acara pernikahan putra-putri kami",
   events: [
     { name: "Akad", time: "08.00 WIB - 09.00 WIB" },
     { name: "Resepsi", time: "10.00 WIB - 12.00 WIB" },

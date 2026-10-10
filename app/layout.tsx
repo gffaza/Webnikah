@@ -1,18 +1,35 @@
 import type { Metadata, Viewport } from "next";
-import { Great_Vibes, Noto_Serif } from "next/font/google";
+import localFont from "next/font/local";
 import { wedding } from "@/content/wedding";
 import "./globals.css";
 
-const notoSerif = Noto_Serif({
+const notoSerif = localFont({
+  src: [
+    {
+      path: "./fonts/noto-serif-latin-400-normal.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/noto-serif-latin-700-normal.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
   variable: "--font-noto-serif",
-  subsets: ["latin"],
-  weight: ["400", "700"],
+  display: "swap",
 });
 
-const greatVibes = Great_Vibes({
+const greatVibes = localFont({
+  src: [
+    {
+      path: "./fonts/great-vibes-latin-400-normal.woff2",
+      weight: "400",
+      style: "normal",
+    },
+  ],
   variable: "--font-great-vibes",
-  subsets: ["latin"],
-  weight: "400",
+  display: "swap",
 });
 
 const couple = `${wedding.bride.nickname} & ${wedding.groom.nickname}`;

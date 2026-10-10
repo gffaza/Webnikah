@@ -2,7 +2,7 @@ import { BottomNav } from "@/components/client/bottom-nav";
 import { InvitationGate, MusicToggle } from "@/components/client/invitation-gate";
 import { SharedInviteBackdrop } from "@/components/client/shared-invite-backdrop";
 import { Closing } from "@/components/sections/closing";
-import { Bride, Groom } from "@/components/sections/couple";
+import { CoupleSection } from "@/components/sections/couple-section";
 import { Cover } from "@/components/sections/cover";
 import { Events } from "@/components/sections/events";
 import { Gallery } from "@/components/sections/gallery";
@@ -34,11 +34,12 @@ export default function Home() {
         <InvitationGate music={wedding.music} scrollTo="intro">
           <Cover />
           <Intro />
-          <Bride />
-          <Groom />
+          <CoupleSection id="couple" />
+          {/* <Bride />
+          <Groom /> */}
           <Events />
           <Video />
-          <Story />
+          {/* <Story /> */}
           <Gallery />
           <Gift />
           <Rsvp />
