@@ -136,9 +136,13 @@ export function InvitationGate({
   const finishCinematic = useCallback(() => {
     writeOpened();
     setPhase("opened");
-    requestAnimationFrame(() => {
-      document.getElementById(scrollTo)?.scrollIntoView({ behavior: "smooth" });
-    });
+    // Let the cover fade settle, then ease into the next slide.
+    window.setTimeout(() => {
+      document.getElementById(scrollTo)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 120);
   }, [scrollTo]);
 
   const toggleMusic = useCallback(() => {

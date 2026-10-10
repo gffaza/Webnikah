@@ -9,7 +9,7 @@ export function Cover() {
     <Section id="cover" panel="arch" preload className="pt-401">
       <div
         aria-hidden
-        className="absolute inset-x-162 top-196 bottom-195 z-0 rounded-full border-[length:calc(var(--spacing)*5)] border-rose-deep/70"
+        className="cover-chrome absolute inset-x-162 top-196 bottom-195 z-0 rounded-full border-[length:calc(var(--spacing)*5)] border-rose-deep/70"
       />
 
       <div className="cover-ui relative z-[3] flex flex-1 flex-col items-center">

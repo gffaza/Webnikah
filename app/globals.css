@@ -135,19 +135,44 @@ body {
   }
 }
 
-/* Soft settle on the cover while the opening beat runs (no video overlay). */
-.invite[data-invite-phase="cinematic"] .cover-ui {
-  opacity: 0.72;
-  transition: opacity 0.7s ease;
+/* Cover chrome dissolve — capsule, gunungan, and copy leave only the living backdrop. */
+.invite .cover-ui,
+.invite .cover-chrome,
+.invite #cover .section-panel,
+.invite .cover-gunungan {
+  transition:
+    opacity 1.25s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.25s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.invite[data-invite-phase="cinematic"] .cover-ui,
+.invite[data-invite-phase="opened"] #cover .cover-ui {
+  opacity: 0;
+  transform: translateY(-12px) scale(0.985);
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.invite[data-invite-phase="cinematic"] .cover-chrome,
+.invite[data-invite-phase="opened"] #cover .cover-chrome,
+.invite[data-invite-phase="cinematic"] #cover .section-panel,
+.invite[data-invite-phase="opened"] #cover .section-panel {
+  opacity: 0;
+  transform: scale(1.03);
+  pointer-events: none;
+}
+
+/* Gunungan only during the opening beat — later floral slides keep it. */
+.invite[data-invite-phase="cinematic"] .cover-gunungan {
+  opacity: 0;
+  transform: scale(1.04);
   pointer-events: none;
 }
 
 .invite[data-invite-phase="loading"] {
   min-height: 100svh;
-}
-
-.invite .cover-ui {
-  transition: opacity 0.5s ease;
 }
 
 /* SVG <g.float-layer> needs fill-box so % translates stay local to each ornament. */
@@ -206,6 +231,55 @@ body {
   }
 }
 
+/* Slow, closed wander paths — three butterflies during the opening beat. */
+@keyframes float-butterfly-cinematic-a {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translate(16%, 18%) rotate(10deg) scale(1.03);
+  }
+  50% {
+    transform: translate(-10%, 32%) rotate(-8deg) scale(1.01);
+  }
+  75% {
+    transform: translate(20%, 10%) rotate(6deg) scale(1.04);
+  }
+}
+
+@keyframes float-butterfly-cinematic-b {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  20% {
+    transform: translate(28%, -22%) rotate(-12deg) scale(1.05);
+  }
+  45% {
+    transform: translate(42%, -48%) rotate(8deg) scale(1.02);
+  }
+  70% {
+    transform: translate(12%, -30%) rotate(-6deg) scale(1.04);
+  }
+}
+
+@keyframes float-butterfly-cinematic-c {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  22% {
+    transform: translate(-26%, -20%) rotate(12deg) scale(1.05);
+  }
+  48% {
+    transform: translate(-40%, -46%) rotate(-9deg) scale(1.02);
+  }
+  72% {
+    transform: translate(-14%, -28%) rotate(7deg) scale(1.04);
+  }
+}
+
 /* Full-bleed frame / peach capsule — gentle but readable drift. */
 @keyframes float-sway-soft {
   0%,
@@ -218,27 +292,33 @@ body {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Stronger drift during the opening beat */
+  /* Soft floral drift during the opening beat */
   .invite[data-invite-phase="cinematic"] .float-layer--a {
-    animation: float-sway-a 3.6s ease-in-out infinite;
+    animation: float-sway-a 7s ease-in-out infinite;
   }
   .invite[data-invite-phase="cinematic"] .float-layer--b {
-    animation: float-sway-b 4s ease-in-out infinite;
+    animation: float-sway-b 8s ease-in-out infinite;
   }
   .invite[data-invite-phase="cinematic"] .float-layer--c {
-    animation: float-sway-c 3.2s ease-in-out infinite;
+    animation: float-sway-c 6.5s ease-in-out infinite;
   }
   .invite[data-invite-phase="cinematic"] .float-layer--d {
-    animation: float-sway-d 4.4s ease-in-out infinite;
+    animation: float-sway-d 7.5s ease-in-out infinite;
   }
   .invite[data-invite-phase="cinematic"] .float-layer--butterfly {
-    animation: float-butterfly 3.6s ease-in-out infinite;
+    animation: float-butterfly-cinematic-a 11s ease-in-out infinite;
+  }
+  .invite[data-invite-phase="cinematic"] .float-layer--butterfly-b {
+    animation: float-butterfly-cinematic-b 13s ease-in-out infinite;
+  }
+  .invite[data-invite-phase="cinematic"] .float-layer--butterfly-c {
+    animation: float-butterfly-cinematic-c 12s ease-in-out infinite;
   }
   .invite[data-invite-phase="cinematic"] .float-layer--soft {
-    animation: float-sway-soft 5s ease-in-out infinite;
+    animation: float-sway-soft 9s ease-in-out infinite;
   }
 
-  /* Ambient motion after open — faster + wider than before so it reads clearly */
+  /* Ambient motion after open */
   .invite[data-invite-phase="opened"] .float-layer--a {
     animation: float-sway-a 7s ease-in-out infinite;
   }
@@ -252,7 +332,15 @@ body {
     animation: float-sway-d 7s ease-in-out infinite;
   }
   .invite[data-invite-phase="opened"] .float-layer--butterfly {
-    animation: float-butterfly 8s ease-in-out infinite;
+    animation: float-butterfly 9s ease-in-out infinite;
+  }
+  .invite[data-invite-phase="opened"] .float-layer--butterfly-b {
+    animation: float-butterfly 10s ease-in-out infinite;
+    animation-delay: -3s;
+  }
+  .invite[data-invite-phase="opened"] .float-layer--butterfly-c {
+    animation: float-butterfly 11s ease-in-out infinite;
+    animation-delay: -6s;
   }
   .invite[data-invite-phase="opened"] .float-layer--soft {
     animation: float-sway-soft 8s ease-in-out infinite;

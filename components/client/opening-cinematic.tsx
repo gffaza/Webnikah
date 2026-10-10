@@ -2,8 +2,10 @@
 
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 
-/** How long the living-backdrop beat holds before scrolling to the next slide. */
-const BEAT_MS = 2800;
+/** Brief living-backdrop beat — butterflies keep looping; we don't wait for a full cycle. */
+const BEAT_MS = 4200;
+/** Soft handoff into the next slide (matches cover fade / skip control). */
+const EXIT_MS = 700;
 
 /**
  * Opening beat after "Buka Undangan" — background assets drift, then we unlock + scroll.
@@ -32,13 +34,13 @@ export function OpeningCinematic({ onComplete }: { onComplete: () => void }) {
 
   useEffect(() => {
     if (!exiting) return;
-    const id = window.setTimeout(onComplete, 450);
+    const id = window.setTimeout(onComplete, EXIT_MS);
     return () => window.clearTimeout(id);
   }, [exiting, onComplete]);
 
   return (
     <div
-      className={`pointer-events-none fixed top-0 left-1/2 z-40 h-svh w-full max-w-[480px] -translate-x-1/2 transition-opacity duration-500 ${
+      className={`pointer-events-none fixed top-0 left-1/2 z-40 h-svh w-full max-w-[480px] -translate-x-1/2 transition-opacity duration-700 ease-out ${
         exiting ? "opacity-0" : "opacity-100"
       }`}
       aria-hidden

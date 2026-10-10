@@ -43,7 +43,10 @@ export function Section({
     >
       <SectionBackdrop type={background} eager={preload} />
       {panel !== "none" && (
-        <div aria-hidden className={`absolute -z-10 ${panelClass[panel]}`} />
+        <div
+          aria-hidden
+          className={`section-panel absolute -z-10 ${panelClass[panel]}`}
+        />
       )}
       <div className={`relative z-[1] flex flex-1 flex-col items-center text-center ${className}`}>
         {children}

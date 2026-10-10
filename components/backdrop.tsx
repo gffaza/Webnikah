@@ -98,17 +98,31 @@ function Layer({
   );
 }
 
-type FloatVariant = "a" | "b" | "c" | "d" | "butterfly" | "soft";
+type FloatVariant =
+  | "a"
+  | "b"
+  | "c"
+  | "d"
+  | "butterfly"
+  | "butterfly-b"
+  | "butterfly-c"
+  | "soft";
 
 function Float({
   variant,
+  className = "",
   children,
 }: {
   variant: FloatVariant;
+  className?: string;
   children: ReactNode;
 }) {
   return (
-    <div className={`float-layer float-layer--${variant} absolute inset-0`}>{children}</div>
+    <div
+      className={`float-layer float-layer--${variant} absolute inset-0 ${className}`.trim()}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -199,7 +213,7 @@ export function FloralBackdrop({
         />
       </Float>
 
-      <Float variant="c">
+      <Float variant="c" className="cover-gunungan">
         <Layer
           src={img.gunungan}
           width={720}
@@ -242,7 +256,7 @@ export function FloralBackdrop({
         />
       </Float>
 
-      <Float variant="c">
+      <Float variant="butterfly-b">
         <Layer
           src={img.sideButterfly}
           width={420}
@@ -252,7 +266,7 @@ export function FloralBackdrop({
           className="bottom-[17%] left-[1%] w-[17%]"
         />
       </Float>
-      <Float variant="d">
+      <Float variant="butterfly-c">
         <Layer
           src={img.sideButterfly}
           width={420}
