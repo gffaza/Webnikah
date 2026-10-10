@@ -1,32 +1,10 @@
-import { YoutubeLite } from "@/components/client/youtube-lite";
+import { VideoLite } from "@/components/client/video-lite";
 import { Section } from "@/components/section";
 import { wedding } from "@/content/wedding";
 
-/** Accepts a bare ID or a full YouTube / Shorts URL. */
-function resolveYoutubeId(value: string): string | null {
-  const trimmed = value.trim();
-  if (!trimmed) return null;
-  if (/^[\w-]{11}$/.test(trimmed)) return trimmed;
-
-  try {
-    const url = new URL(trimmed);
-    if (url.pathname.startsWith("/shorts/")) {
-      return url.pathname.split("/")[2] ?? null;
-    }
-    if (url.pathname.startsWith("/embed/")) {
-      return url.pathname.split("/")[2] ?? null;
-    }
-    const v = url.searchParams.get("v");
-    if (v) return v;
-  } catch {
-    /* not a URL */
-  }
-
-  return null;
-}
-
 export function Video() {
-  const youtubeId = resolveYoutubeId(wedding.youtubeId);
+  const { src, poster } = wedding.video;
+  const hasVideo = Boolean(src.trim());
 
   return (
     <Section
@@ -36,11 +14,12 @@ export function Video() {
     >
       <h2 className="reveal shrink-0 text-h1 font-bold text-rose">Video Prewed</h2>
 
-      {youtubeId ? (
+      {hasVideo ? (
         <div className="reveal relative min-h-0 w-full flex-1">
           <div className="absolute inset-0 flex items-center justify-center">
-            <YoutubeLite
-              id={youtubeId}
+            <VideoLite
+              src={src}
+              poster={poster}
               title="Video prewedding"
               className="aspect-[9/16] h-full w-auto max-w-full"
             />

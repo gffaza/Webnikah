@@ -3,31 +3,34 @@
 import { useState } from "react";
 
 /**
- * Thumbnail first — YouTube iframe only after tap.
- * Avoids Safari/WebKit carrying a heavy player while the guest scrolls.
+ * Poster first — R2/HTML5 video only after tap.
+ * Avoids pulling the full MP4 while the guest scrolls.
  */
-export function YoutubeLite({
-  id,
+export function VideoLite({
+  src,
+  poster,
   title,
   className = "aspect-[9/16] w-full",
 }: {
-  id: string;
+  src: string;
+  poster: string;
   title: string;
   className?: string;
 }) {
   const [playing, setPlaying] = useState(false);
-  const thumb = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
   const shell = `rounded-card shadow-md ${className}`;
 
   if (playing) {
     return (
-      <iframe
-        src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1`}
+      <video
+        src={src}
+        poster={poster}
         title={title}
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerPolicy="strict-origin-when-cross-origin"
-        allowFullScreen
-        className={shell}
+        controls
+        playsInline
+        autoPlay
+        preload="metadata"
+        className={`${shell} bg-ink object-contain`}
       />
     );
   }
@@ -41,7 +44,7 @@ export function YoutubeLite({
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={thumb}
+        src={poster}
         alt=""
         width={480}
         height={853}

@@ -52,8 +52,11 @@ export type Wedding = {
     address: string;
     mapsUrl: string;
   };
-  /** YouTube Shorts / video ID (or full URL). Leave empty for placeholder. */
-  youtubeId: string;
+  /** Remote prewed clip (R2/CDN). Leave `src` empty for placeholder. */
+  video: {
+    src: string;
+    poster: string;
+  };
   story: {
     photo: string;
     items: StoryItem[];
@@ -111,7 +114,10 @@ export const wedding: Wedding = {
     mapsUrl:
       "https://maps.app.goo.gl/Sc5DEPXSJ1kZY6jZ7",
   },
-  youtubeId: "zxZhcQLBDA8",
+  video: {
+    src: "https://pub-05b77a0eae67482589fcc5f88c59af9f.r2.dev/video/prewed.mp4",
+    poster: "/galery/slide3.webp",
+  },
   story: {
     photo: "/galery/ourstory.webp",
     items: [
