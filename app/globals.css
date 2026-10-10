@@ -181,6 +181,11 @@ body {
   transform-origin: center;
 }
 
+.butterfly-body {
+  transform-box: fill-box;
+  transform-origin: 50% 55%;
+}
+
 @keyframes float-sway-a {
   0%,
   100% {
@@ -221,62 +226,101 @@ body {
   }
 }
 
+/* Ambient hover — continuous soft figure (linear timing avoids loop hitch). */
 @keyframes float-butterfly {
-  0%,
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(1.1%, -2.2%) rotate(-2.5deg);
+  }
+  50% {
+    transform: translate(-0.4%, -3.4%) rotate(1.5deg);
+  }
+  75% {
+    transform: translate(0.8%, -1.4%) rotate(-1.5deg);
+  }
   100% {
     transform: translate(0, 0) rotate(0deg);
   }
-  50% {
-    transform: translate(0.6%, -3.6%) rotate(-3.6deg);
-  }
 }
 
-/* Slow, closed wander paths — three butterflies during the opening beat. */
+/*
+ * Cinematic wander: evenly spaced samples on a soft closed curve.
+ * Use linear timing so ease-in-out doesn't pause at each keyframe / loop seam.
+ * Path on .float-layer; wing bob on .butterfly-body.
+ */
 @keyframes float-butterfly-cinematic-a {
-  0%,
+  0% {
+    transform: translate(0, 0) rotate(-1deg);
+  }
+  20% {
+    transform: translate(10%, 8%) rotate(5deg);
+  }
+  40% {
+    transform: translate(14%, 20%) rotate(3deg);
+  }
+  60% {
+    transform: translate(-6%, 26%) rotate(-5deg);
+  }
+  80% {
+    transform: translate(-8%, 12%) rotate(-3deg);
+  }
   100% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
-  }
-  25% {
-    transform: translate(16%, 18%) rotate(10deg) scale(1.03);
-  }
-  50% {
-    transform: translate(-10%, 32%) rotate(-8deg) scale(1.01);
-  }
-  75% {
-    transform: translate(20%, 10%) rotate(6deg) scale(1.04);
+    transform: translate(0, 0) rotate(-1deg);
   }
 }
 
 @keyframes float-butterfly-cinematic-b {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
+  0% {
+    transform: translate(0, 0) rotate(2deg);
   }
   20% {
-    transform: translate(28%, -22%) rotate(-12deg) scale(1.05);
+    transform: translate(14%, -12%) rotate(-4deg);
   }
-  45% {
-    transform: translate(42%, -48%) rotate(8deg) scale(1.02);
+  40% {
+    transform: translate(30%, -30%) rotate(-2deg);
   }
-  70% {
-    transform: translate(12%, -30%) rotate(-6deg) scale(1.04);
+  60% {
+    transform: translate(34%, -38%) rotate(4deg);
+  }
+  80% {
+    transform: translate(12%, -18%) rotate(2deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(2deg);
   }
 }
 
 @keyframes float-butterfly-cinematic-c {
+  0% {
+    transform: translate(0, 0) rotate(-2deg);
+  }
+  20% {
+    transform: translate(-14%, -12%) rotate(4deg);
+  }
+  40% {
+    transform: translate(-28%, -28%) rotate(2deg);
+  }
+  60% {
+    transform: translate(-32%, -36%) rotate(-4deg);
+  }
+  80% {
+    transform: translate(-10%, -16%) rotate(-2deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(-2deg);
+  }
+}
+
+/* Soft wing bob — low amplitude so it doesn't fight the path. */
+@keyframes butterfly-flutter {
   0%,
   100% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
+    transform: translateY(0) scale(1);
   }
-  22% {
-    transform: translate(-26%, -20%) rotate(12deg) scale(1.05);
-  }
-  48% {
-    transform: translate(-40%, -46%) rotate(-9deg) scale(1.02);
-  }
-  72% {
-    transform: translate(-14%, -28%) rotate(7deg) scale(1.04);
+  50% {
+    transform: translateY(-0.8%) scale(1.008);
   }
 }
 
@@ -306,13 +350,26 @@ body {
     animation: float-sway-d 7.5s ease-in-out infinite;
   }
   .invite[data-invite-phase="cinematic"] .float-layer--butterfly {
-    animation: float-butterfly-cinematic-a 11s ease-in-out infinite;
+    animation: float-butterfly-cinematic-a 14s linear infinite;
   }
   .invite[data-invite-phase="cinematic"] .float-layer--butterfly-b {
-    animation: float-butterfly-cinematic-b 13s ease-in-out infinite;
+    animation: float-butterfly-cinematic-b 16s linear infinite;
+    animation-delay: -2.4s;
   }
   .invite[data-invite-phase="cinematic"] .float-layer--butterfly-c {
-    animation: float-butterfly-cinematic-c 12s ease-in-out infinite;
+    animation: float-butterfly-cinematic-c 15s linear infinite;
+    animation-delay: -5.1s;
+  }
+  .invite[data-invite-phase="cinematic"] .float-layer--butterfly .butterfly-body {
+    animation: butterfly-flutter 0.85s ease-in-out infinite;
+  }
+  .invite[data-invite-phase="cinematic"] .float-layer--butterfly-b .butterfly-body {
+    animation: butterfly-flutter 0.95s ease-in-out infinite;
+    animation-delay: -0.18s;
+  }
+  .invite[data-invite-phase="cinematic"] .float-layer--butterfly-c .butterfly-body {
+    animation: butterfly-flutter 0.9s ease-in-out infinite;
+    animation-delay: -0.31s;
   }
   .invite[data-invite-phase="cinematic"] .float-layer--soft {
     animation: float-sway-soft 9s ease-in-out infinite;
@@ -332,15 +389,26 @@ body {
     animation: float-sway-d 7s ease-in-out infinite;
   }
   .invite[data-invite-phase="opened"] .float-layer--butterfly {
-    animation: float-butterfly 9s ease-in-out infinite;
+    animation: float-butterfly 10s linear infinite;
   }
   .invite[data-invite-phase="opened"] .float-layer--butterfly-b {
-    animation: float-butterfly 10s ease-in-out infinite;
-    animation-delay: -3s;
+    animation: float-butterfly 11.5s linear infinite;
+    animation-delay: -3.2s;
   }
   .invite[data-invite-phase="opened"] .float-layer--butterfly-c {
-    animation: float-butterfly 11s ease-in-out infinite;
-    animation-delay: -6s;
+    animation: float-butterfly 12.5s linear infinite;
+    animation-delay: -6.4s;
+  }
+  .invite[data-invite-phase="opened"] .float-layer--butterfly .butterfly-body,
+  .invite[data-invite-phase="opened"] .float-layer--butterfly-b .butterfly-body,
+  .invite[data-invite-phase="opened"] .float-layer--butterfly-c .butterfly-body {
+    animation: butterfly-flutter 1s ease-in-out infinite;
+  }
+  .invite[data-invite-phase="opened"] .float-layer--butterfly-b .butterfly-body {
+    animation-delay: -0.22s;
+  }
+  .invite[data-invite-phase="opened"] .float-layer--butterfly-c .butterfly-body {
+    animation-delay: -0.41s;
   }
   .invite[data-invite-phase="opened"] .float-layer--soft {
     animation: float-sway-soft 8s ease-in-out infinite;

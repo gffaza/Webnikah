@@ -117,11 +117,16 @@ function Float({
   className?: string;
   children: ReactNode;
 }) {
+  const isButterfly = variant.startsWith("butterfly");
   return (
     <div
       className={`float-layer float-layer--${variant} absolute inset-0 ${className}`.trim()}
     >
-      {children}
+      {isButterfly ? (
+        <div className="butterfly-body absolute inset-0">{children}</div>
+      ) : (
+        children
+      )}
     </div>
   );
 }
