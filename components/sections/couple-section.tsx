@@ -10,11 +10,11 @@ export function CoupleSection({ id }: { id: string }) {
     <Section id={id} className="px-142 pt-147">
       <h2 className="reveal text-h2 font-bold text-rose">Bride &amp; Groom</h2>
       <p className="reveal mt-72 text-lead text-ink text-xs">{wedding.invitationText}</p>
-      <div className="flex grid-cols-2 gap-40">
+      <div className="flex grid-cols-2 gap-40 mt-48">
 
-        <div>
+        <div >
 
-          <div className="reveal relative mt-32 h-600 w-380 overflow-hidden rounded-card shadow-md">
+          <div className="reveal relative mt-40 mb-40 h-600 w-380 overflow-hidden rounded-card shadow-md">
             <Image
               src={bride.photo}
               alt={bride.fullName}
@@ -25,7 +25,7 @@ export function CoupleSection({ id }: { id: string }) {
               className="object-cover"
             />
           </div>
-          <p className="reveal mt-40 font-script text-3xl leading-tight text-rose">
+          <p className="reveal mt-40 font-script text-4xl leading-tight text-rose">
             {bride.fullName}
           </p>
           <p className="reveal mt-12 text-xs text-ink">{bride.parents}</p>
@@ -34,7 +34,7 @@ export function CoupleSection({ id }: { id: string }) {
         &amp;</h2> */}
         <div>
 
-          <div className="reveal relative mt-32 h-600 w-380 overflow-hidden rounded-card shadow-md">
+          <div className="reveal relative mt-40 mb-40 h-600 w-380 overflow-hidden rounded-card shadow-md">
             <Image
               src={groom.photo}
               alt={groom.fullName}
@@ -45,7 +45,7 @@ export function CoupleSection({ id }: { id: string }) {
               className="object-cover"
             />
           </div>
-          <p className="reveal mt-40 font-script text-3xl leading-tight text-rose">
+          <p className="reveal mt-40 font-script text-4xl leading-tight text-rose">
             {groom.fullName}
           </p>
           <p className="reveal mt-12 text-xs text-ink">{groom.parents}</p>
