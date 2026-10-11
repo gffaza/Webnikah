@@ -24,7 +24,7 @@ export function CoupleSection({ id }: { id: string }) {
               className="object-cover"
             />
           </div>
-          <p className="reveal mt-40 font-script text-4xl leading-tight text-rose">
+          <p className="reveal mt-40 font-script text-3xl leading-tight text-rose">
             {bride.fullName}
           </p>
           <p className="reveal mt-12 text-xs text-ink">{bride.parents}</p>
@@ -44,7 +44,7 @@ export function CoupleSection({ id }: { id: string }) {
               className="object-cover"
             />
           </div>
-          <p className="reveal mt-40 font-script text-4xl leading-tight text-rose">
+          <p className="reveal mt-40 font-script text-3xl leading-tight text-rose">
             {groom.fullName}
           </p>
           <p className="reveal mt-12 text-xs text-ink">{groom.parents}</p>

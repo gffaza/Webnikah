@@ -127,19 +127,19 @@ export const wedding: Wedding = {
         title: "Awal Bertemu",
         // date: "2020",
         description:
-          "Kisah kami bermula dari Pesona Ta’aruf, orientasi mahasiswa baru Universitas Islam Indonesia, pada tahun 2020. Saat itu Ayu adalah mahasiswa baru, sedangkan Faza adalah kakak tingkat yang bertugas sebagai panitia. Dari sanalah keduanya mulai berkenalan dan semakin dekat.",
+          "Kisah Ayu & Faza bermula dari Pesona Ta’aruf, orientasi mahasiswa baru Universitas Islam Indonesia, pada tahun 2020. Saat itu Ayu adalah mahasiswa baru, sedangkan Faza adalah kakak tingkat yang bertugas sebagai panitia. Dari sanalah keduanya mulai berkenalan dan semakin dekat.",
       },
       {
         title: "Lamaran",
         // date: "5 Sep 2026",
         description:
-          "Selama 6 tahun, Faza dan Ayu berjalan bersama melewati masa kuliah, kelulusan, dunia kerja, hingga hubungan jarak jauh. Dari perjalanan itu, keduanya yakin untuk melangkah ke jenjang yang lebih serius. Pada 5 September 2026, mereka resmi bertunangan.",
+          "Selama 6 tahun, Ayu & Faza berjalan bersama melewati masa kuliah, kelulusan, dunia kerja, hingga hubungan jarak jauh. Dari perjalanan itu, keduanya yakin untuk melangkah ke jenjang yang lebih serius. Pada 5 September 2026, mereka resmi bertunangan.",
       },
       {
         title: "Menuju Hari Bahagia",
         // date: "Des 2026",
         description:
-          "Hanya sekitar 3 bulan setelah pertunangan, persiapan pernikahan harus dijalani dari jarak jauh. Berkat komunikasi yang baik dan bantuan keluarga, alhamdulillah semuanya dapat dipersiapkan dengan baik. Kini, Faza dan Ayu bersiap menyambut hari bahagia mereka.",
+          "Hanya sekitar 3 bulan setelah pertunangan, persiapan pernikahan harus dijalani dari jarak jauh. Berkat komunikasi yang baik dan bantuan keluarga, alhamdulillah semuanya dapat dipersiapkan dengan baik. Kini, Ayu & Faza bersiap menyambut hari bahagia mereka.",
       },
     ],
   },
@@ -162,13 +162,13 @@ export const wedding: Wedding = {
       {
         bank: "Mandiri",
         logo: "/images/bank-mandiri.webp",
-        number: "712345123",
+        number: "1370024027134",
         holder: "Cahya Ayu Lestari",
       },
       {
         bank: "BSI",
         logo: "/images/bank-bsi.webp",
-        number: "712345123",
+        number: "7300777095",
         holder: "Ghilman Faza",
       },
     ],

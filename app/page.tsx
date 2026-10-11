@@ -38,8 +38,8 @@ export default function Home() {
           {/* <Bride />
           <Groom /> */}
           <Events />
-          <Video />
           <Story />
+          <Video />
           <Gallery />
           <Gift />
           <Rsvp />
