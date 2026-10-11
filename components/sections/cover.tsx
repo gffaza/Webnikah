@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { CoverOrnaments } from "@/components/backdrop";
 import { OpenInvitationButton } from "@/components/client/invitation-gate";
 import { GuestName } from "@/components/client/guest-name";
 import { Section } from "@/components/section";
@@ -6,7 +7,21 @@ import { wedding } from "@/content/wedding";
 
 export function Cover() {
   return (
-    <Section id="cover" panel="arch" preload className="pt-401">
+    <Section
+      id="cover"
+      panel="arch"
+      preload
+      includeCoverOrnaments={false}
+      className="pt-401"
+    >
+      {/* Above cream capsule + chrome; below copy / CTA */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-[2] overflow-hidden"
+      >
+        <CoverOrnaments preload />
+      </div>
+
       <div
         aria-hidden
         className="cover-chrome absolute inset-x-162 top-196 bottom-195 z-0 rounded-full border-[length:calc(var(--spacing)*5)] border-rose-deep/70"

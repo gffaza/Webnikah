@@ -9,6 +9,7 @@ const SLIDES = [
   "mempelai-wanita",
   "acara",
   "video",
+  "cerita",
   "galeri",
   "hadiah",
   "rsvp",

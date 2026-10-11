@@ -14,9 +14,11 @@ const UNMOUNT_DELAY_MS = 450;
 export function DeferredBackdrop({
   type,
   eager = false,
+  includeCoverOrnaments = true,
 }: {
   type: BackdropType;
   eager?: boolean;
+  includeCoverOrnaments?: boolean;
 }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(eager);
@@ -63,7 +65,11 @@ export function DeferredBackdrop({
       type === "arch" ? (
         <ArchBackdrop quality="rich" />
       ) : (
-        <FloralBackdrop preload={eager} quality="rich" />
+        <FloralBackdrop
+          preload={eager}
+          quality="rich"
+          includeCoverOrnaments={includeCoverOrnaments}
+        />
       );
   }
 

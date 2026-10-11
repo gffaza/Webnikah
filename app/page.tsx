@@ -39,7 +39,7 @@ export default function Home() {
           <Groom /> */}
           <Events />
           <Video />
-          {/* <Story /> */}
+          <Story />
           <Gallery />
           <Gift />
           <Rsvp />

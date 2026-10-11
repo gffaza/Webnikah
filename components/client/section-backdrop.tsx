@@ -10,9 +10,11 @@ import { useIOSWebKit } from "@/components/client/use-ios-webkit";
 export function SectionBackdrop({
   type,
   eager = false,
+  includeCoverOrnaments = true,
 }: {
   type: BackdropType;
   eager?: boolean;
+  includeCoverOrnaments?: boolean;
 }) {
   const ios = useIOSWebKit();
 
@@ -27,5 +29,11 @@ export function SectionBackdrop({
 
   if (ios) return null;
 
-  return <DeferredBackdrop type={type} eager={eager} />;
+  return (
+    <DeferredBackdrop
+      type={type}
+      eager={eager}
+      includeCoverOrnaments={includeCoverOrnaments}
+    />
+  );
 }

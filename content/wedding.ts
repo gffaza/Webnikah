@@ -12,6 +12,8 @@ export type WeddingEvent = {
 
 export type StoryItem = {
   title: string;
+  /** Short label shown on the timeline (year or date). */
+  // date: string;
   description: string;
 };
 
@@ -77,13 +79,13 @@ export type Wedding = {
 export const wedding: Wedding = {
   bride: {
     nickname: "Ayu",
-    fullName: "Cahya Ayu Lestari",
+    fullName: "Cahya Ayu Lestari S.Psi",
     parents: "Putri dari Bapak Kabul Wibowo & Ibu Suniasih",
     photo: "/galery/bride.webp",
   },
   groom: {
     nickname: "Faza",
-    fullName: "Ghilman Faza",
+    fullName: "Ghilman Faza S.Kom",
     parents: "Putra dari Bapak Teguh Puji Raharjo & (Almh) Ibu Asih Kurniawati",
     photo: "/galery/groom.webp",
   },
@@ -110,7 +112,7 @@ export const wedding: Wedding = {
     { name: "Resepsi", time: "10.00 WIB - 12.00 WIB" },
   ],
   venue: {
-    address: "Sidorejo, Lendah, Kulon Progo, Daerah Istimewa Yogyakarta",
+    address: "Jurug, Sidorejo, Lendah, Kulon Progo, Daerah Istimewa Yogyakarta",
     mapsUrl:
       "https://maps.app.goo.gl/Sc5DEPXSJ1kZY6jZ7",
   },
@@ -123,18 +125,21 @@ export const wedding: Wedding = {
     items: [
       {
         title: "Awal Bertemu",
+        // date: "2020",
         description:
-          "Alamat Bby is simply dummy text of the printing and typesetting industry.",
+          "Kisah kami bermula dari Pesona Ta’aruf, orientasi mahasiswa baru Universitas Islam Indonesia, pada tahun 2020. Saat itu Ayu adalah mahasiswa baru, sedangkan Faza adalah kakak tingkat yang bertugas sebagai panitia. Dari sanalah keduanya mulai berkenalan dan semakin dekat.",
       },
       {
         title: "Lamaran",
+        // date: "5 Sep 2026",
         description:
-          "Alamat Bby is simply dummy text of the printing and typesetting industry.",
+          "Selama 6 tahun, Faza dan Ayu berjalan bersama melewati masa kuliah, kelulusan, dunia kerja, hingga hubungan jarak jauh. Dari perjalanan itu, keduanya yakin untuk melangkah ke jenjang yang lebih serius. Pada 5 September 2026, mereka resmi bertunangan.",
       },
       {
-        title: "Pernikahan",
+        title: "Menuju Hari Bahagia",
+        // date: "Des 2026",
         description:
-          "Alamat Bby is simply dummy text of the printing and typesetting industry.",
+          "Hanya sekitar 3 bulan setelah pertunangan, persiapan pernikahan harus dijalani dari jarak jauh. Berkat komunikasi yang baik dan bantuan keluarga, alhamdulillah semuanya dapat dipersiapkan dengan baik. Kini, Faza dan Ayu bersiap menyambut hari bahagia mereka.",
       },
     ],
   },

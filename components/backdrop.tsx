@@ -181,9 +181,15 @@ function ArchPart({
 export function FloralBackdrop({
   preload = false,
   quality = "rich",
+  includeCoverOrnaments = true,
 }: {
   preload?: boolean;
   quality?: BackdropQuality;
+  /**
+   * When false, skip top/side butterflies + bottom lilies so Cover can
+   * paint them above the cream capsule.
+   */
+  includeCoverOrnaments?: boolean;
 }) {
   return (
     <div aria-hidden className="absolute inset-0 overflow-hidden bg-[#f5f2f2]">
@@ -240,6 +246,45 @@ export function FloralBackdrop({
         />
       </Float>
 
+      {includeCoverOrnaments ? (
+        <CoverOrnaments preload={preload} quality={quality} />
+      ) : null}
+
+      <Float variant="a">
+        <Layer
+          src={img.hangingVine}
+          width={604}
+          height={611}
+          quality={quality}
+          className="top-[0%] left-[8%] w-[28%] -rotate-6"
+        />
+      </Float>
+      <Float variant="b">
+        <Layer
+          src={img.hangingVine}
+          width={604}
+          height={611}
+          quality={quality}
+          className="top-[0%] right-[8%] w-[28%] rotate-6 -scale-x-100"
+        />
+      </Float>
+    </div>
+  );
+}
+
+/**
+ * Cover foreground: top butterfly, side butterflies, bottom lilies.
+ * Painted above the cream capsule on the cover only.
+ */
+export function CoverOrnaments({
+  preload = false,
+  quality = "rich",
+}: {
+  preload?: boolean;
+  quality?: BackdropQuality;
+}) {
+  return (
+    <>
       <Float variant="a">
         <Layer
           src={img.lilies}
@@ -260,7 +305,6 @@ export function FloralBackdrop({
           className="right-[-20%] bottom-[-3%] w-[62%] -scale-x-100"
         />
       </Float>
-
       <Float variant="butterfly-b">
         <Layer
           src={img.sideButterfly}
@@ -281,26 +325,6 @@ export function FloralBackdrop({
           className="right-[1%] bottom-[17%] w-[17%] -scale-x-100"
         />
       </Float>
-
-      <Float variant="a">
-        <Layer
-          src={img.hangingVine}
-          width={604}
-          height={611}
-          quality={quality}
-          className="top-[0%] left-[8%] w-[28%] -rotate-6"
-        />
-      </Float>
-      <Float variant="b">
-        <Layer
-          src={img.hangingVine}
-          width={604}
-          height={611}
-          quality={quality}
-          className="top-[0%] right-[8%] w-[28%] rotate-6 -scale-x-100"
-        />
-      </Float>
-
       <Float variant="butterfly">
         <Layer
           src={img.pinkButterfly}
@@ -311,7 +335,7 @@ export function FloralBackdrop({
           className="top-[1%] left-1/2 w-[32%] -translate-x-1/2"
         />
       </Float>
-    </div>
+    </>
   );
 }
 

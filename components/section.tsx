@@ -25,6 +25,7 @@ export function Section({
   panel = "card",
   background = "floral",
   preload = false,
+  includeCoverOrnaments = true,
   className = "",
   children,
 }: {
@@ -32,6 +33,8 @@ export function Section({
   panel?: Panel;
   background?: BackdropType;
   preload?: boolean;
+  /** Cover sets false and paints ornaments above the cream capsule itself. */
+  includeCoverOrnaments?: boolean;
   className?: string;
   children: ReactNode;
 }) {
@@ -41,7 +44,11 @@ export function Section({
       data-backdrop={background}
       className="relative isolate flex min-h-[var(--invite-frame-min-h)] flex-col overflow-hidden"
     >
-      <SectionBackdrop type={background} eager={preload} />
+      <SectionBackdrop
+        type={background}
+        eager={preload}
+        includeCoverOrnaments={includeCoverOrnaments}
+      />
       {panel !== "none" && (
         <div
           aria-hidden
