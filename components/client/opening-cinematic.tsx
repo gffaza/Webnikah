@@ -3,9 +3,9 @@
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 
 /** Brief living-backdrop beat — butterflies keep looping; we don't wait for a full cycle. */
-const BEAT_MS = 4200;
+const BEAT_MS = 2800;
 /** Soft handoff into the next slide (matches cover fade / skip control). */
-const EXIT_MS = 700;
+const EXIT_MS = 500;
 
 /**
  * Opening beat after "Buka Undangan" — background assets drift, then we unlock + scroll.

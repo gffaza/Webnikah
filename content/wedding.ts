@@ -84,7 +84,7 @@ export const wedding: Wedding = {
   groom: {
     nickname: "Faza",
     fullName: "Ghilman Faza",
-    parents: "Putra dari Bapak Teguh Puji Raharjo & Ibu (Almh) Asih Kurniawati",
+    parents: "Putra dari Bapak Teguh Puji Raharjo & (Almh) Ibu Asih Kurniawati",
     photo: "/galery/groom.webp",
   },
   startsAt: "2026-12-19T08:00:00+07:00",
