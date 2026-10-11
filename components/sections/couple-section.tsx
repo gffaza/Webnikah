@@ -14,7 +14,7 @@ export function CoupleSection({ id }: { id: string }) {
 
         <div>
 
-          <div className="reveal relative mt-32 h-800 w-380 overflow-hidden rounded-card shadow-md">
+          <div className="reveal relative mt-32 h-600 w-380 overflow-hidden rounded-card shadow-md">
             <Image
               src={bride.photo}
               alt={bride.fullName}
@@ -34,7 +34,7 @@ export function CoupleSection({ id }: { id: string }) {
         &amp;</h2> */}
         <div>
 
-          <div className="reveal relative mt-32 h-800 w-380 overflow-hidden rounded-card shadow-md">
+          <div className="reveal relative mt-32 h-600 w-380 overflow-hidden rounded-card shadow-md">
             <Image
               src={groom.photo}
               alt={groom.fullName}
