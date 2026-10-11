@@ -8,7 +8,7 @@ export function Events() {
     <Section id="acara" background="arch" panel="none" className="px-200 pt-295">
       {wedding.events.map((event, index) => (
         <div key={event.name} className={`reveal ${index > 0 ? "mt-27" : ""}`}>
-          <h2 className="text-h1 font-bold text-rose">{event.name}</h2>
+          <h2 className="text-h1 font-bold text-rose-deep">{event.name}</h2>
           <p className="mt-68 text-lead text-ink">{event.time}</p>
         </div>
       ))}
