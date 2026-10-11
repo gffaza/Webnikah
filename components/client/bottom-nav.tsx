@@ -7,10 +7,8 @@ import { useGate } from "@/components/client/invitation-gate";
 const SLIDES = [
   "intro",
   "mempelai-wanita",
-  "mempelai-pria",
   "acara",
   "video",
-  "cerita",
   "galeri",
   "hadiah",
   "rsvp",
@@ -96,8 +94,7 @@ export function BottomNav() {
           {NAV.map(({ id, label, Icon }) => {
             const isActive =
               active === id ||
-              (id === "mempelai-wanita" &&
-                (active === "mempelai-wanita" || active === "mempelai-pria"));
+              (id === "mempelai-wanita" && active === "mempelai-wanita");
             return (
               <li key={id} className="min-w-0 flex-1">
                 <button

@@ -7,13 +7,12 @@ export function CoupleSection({ id }: { id: string }) {
   const bride = wedding.bride;
   const groom = wedding.groom;
   return (
-    <Section id={id} className="px-142 pt-147">
+    <Section id="mempelai-wanita" className="px-142 pt-147">
       <h2 className="reveal text-h2 font-bold text-rose">Bride &amp; Groom</h2>
       <p className="reveal mt-72 text-lead text-ink text-xs">{wedding.invitationText}</p>
       <div className="flex grid-cols-2 gap-40 mt-48">
 
         <div >
-
           <div className="reveal relative mt-40 mb-40 h-600 w-380 overflow-hidden rounded-card shadow-md">
             <Image
               src={bride.photo}
