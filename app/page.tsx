@@ -41,7 +41,7 @@ export default function Home() {
           <Story />
           <Video />
           <Gallery />
-          <Gift />
+          {/* <Gift /> */}
           <Rsvp />
           <Closing />
           <MusicToggle />
