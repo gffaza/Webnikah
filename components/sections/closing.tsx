@@ -23,6 +23,7 @@ export function Closing() {
       <p className="reveal mt-87 font-script text-[calc(var(--spacing)*120)] leading-tight text-rose">
         {wedding.bride.nickname} &amp; {wedding.groom.nickname}
       </p>
+      <Image src="/images/Noheels.png" alt="Noheels" width={100} height={100} />
     </Section>
   );
 }

@@ -79,13 +79,13 @@ export type Wedding = {
 export const wedding: Wedding = {
   bride: {
     nickname: "Ayu",
-    fullName: "Cahya Ayu Lestari S.Psi",
+    fullName: "Cahya Ayu Lestari, S.Psi",
     parents: "Putri dari Bapak Kabul Wibowo & Ibu Suniasih",
     photo: "/galery/bride.webp",
   },
   groom: {
     nickname: "Faza",
-    fullName: "Ghilman Faza S.Kom",
+    fullName: "Ghilman Faza, S.Kom",
     parents: "Putra dari Bapak Teguh Puji Raharjo & (Almh) Ibu Asih Kurniawati",
     photo: "/galery/groom.webp",
   },
@@ -108,7 +108,7 @@ export const wedding: Wedding = {
   invitationText:
     "Assalamualaikum Wr.Wb. Dengan memohon Rahmat & Ridho Allah SWT, kami bermaksud mengundang Bapak / Ibu / Saudara/i untuk menghadiri acara pernikahan putra-putri kami",
   events: [
-    { name: "Akad", time: "08.00 WIB - 09.00 WIB" },
+    { name: "Akad", time: "08.00 WIB" },
     { name: "Resepsi", time: "10.00 WIB - 12.00 WIB" },
   ],
   venue: {

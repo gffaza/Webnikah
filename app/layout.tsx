@@ -63,8 +63,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="id"
       className={`${notoSerif.variable} ${greatVibes.variable} h-full antialiased`}
-      // Browser extensions often inject attributes onto <html> before hydrate.
-      // suppressHydrationWarning
+      // Browser extensions inject attributes onto <html> before hydrate.
+      suppressHydrationWarning
     >
       <body className="min-h-full">{children}</body>
     </html>
