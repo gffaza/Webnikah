@@ -7,8 +7,12 @@ export function Closing() {
   const { photo, text } = wedding.closing;
 
   return (
-    <Section id="penutup" className="px-116 pt-174">
-      <div className="reveal relative h-975 w-849 overflow-hidden rounded-t-full rounded-b-card border-[length:calc(var(--spacing)*6)] border-rose-deep shadow-md">
+    <Section
+      id="penutup"
+      fitViewport
+      className="px-116 pt-100 pb-[max(5.75rem,calc(var(--spacing)*160))]"
+    >
+      <div className="reveal relative min-h-0 w-full max-w-849 flex-1 overflow-hidden rounded-t-full rounded-b-card border-[length:calc(var(--spacing)*6)] border-rose-deep shadow-md">
         <Image
           src={photo}
           alt={`${wedding.bride.nickname} dan ${wedding.groom.nickname}`}
@@ -19,12 +23,21 @@ export function Closing() {
           className="object-cover"
         />
       </div>
-      <p className="reveal mt-57 max-w-797 text-lead text-rose-deep">{text}</p>
-      <p className="reveal mt-87 font-script text-[calc(var(--spacing)*120)] leading-tight text-rose">
+      <p className="reveal mt-40 max-w-797 shrink-0 text-lead text-rose-deep">{text}</p>
+      <p className="reveal mt-40 shrink-0 font-script text-[calc(var(--spacing)*120)] leading-none text-rose">
         {wedding.bride.nickname} &amp; {wedding.groom.nickname}
       </p>
-      <Image src="/images/Noheels.png" alt="Noheels" width={100} height={100} />
-      <p className="reveal mt-32 max-w-md text-xs text-rose-deep">Demi kenyamanan, tidak disarankan menggunakan heels</p>
+      <Image
+        src="/images/Noheels.png"
+        alt="Larangan menggunakan heels"
+        width={759}
+        height={758}
+        sizes="120px"
+        className="mt-16 h-auto w-220 max-h-[22svh] max-w-full shrink-0 object-contain"
+      />
+      <p className="reveal mt-16 max-w-md shrink-0 px-16 text-xs leading-snug text-rose-deep">
+        Demi kenyamanan, tidak disarankan menggunakan heels
+      </p>
     </Section>
   );
 }

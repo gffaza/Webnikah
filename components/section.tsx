@@ -26,6 +26,7 @@ export function Section({
   background = "floral",
   preload = false,
   includeCoverOrnaments = true,
+  fitViewport = false,
   className = "",
   children,
 }: {
@@ -35,6 +36,8 @@ export function Section({
   preload?: boolean;
   /** Cover sets false and paints ornaments above the cream capsule itself. */
   includeCoverOrnaments?: boolean;
+  /** Lock the slide to the screen so trailing content is not clipped. */
+  fitViewport?: boolean;
   className?: string;
   children: ReactNode;
 }) {
@@ -42,7 +45,9 @@ export function Section({
     <section
       id={id}
       data-backdrop={background}
-      className="relative isolate flex min-h-[var(--invite-frame-min-h)] flex-col overflow-hidden"
+      className={`relative isolate flex flex-col overflow-hidden ${
+        fitViewport ? "h-svh max-h-svh" : "min-h-[var(--invite-frame-min-h)]"
+      }`}
     >
       <SectionBackdrop
         type={background}
@@ -55,7 +60,11 @@ export function Section({
           className={`section-panel absolute -z-10 ${panelClass[panel]}`}
         />
       )}
-      <div className={`relative z-[1] flex flex-1 flex-col items-center text-center ${className}`}>
+      <div
+        className={`relative z-[1] flex flex-1 flex-col items-center text-center ${
+          fitViewport ? "min-h-0" : ""
+        } ${className}`}
+      >
         {children}
       </div>
     </section>
