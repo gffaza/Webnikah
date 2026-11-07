@@ -157,7 +157,7 @@ export const wedding: Wedding = {
   ],
   gift: {
     text: "Doa Restu Anda merupakan karunia yang sangat berarti bagi kami. Dan jika memberi adalah ungkapan tanda kasih Anda. Anda dapat memberi kado secara cashless.",
-    qris: "/images/qris.webp",
+    qris: "/images/qris.png",
     accounts: [
       {
         bank: "Mandiri",

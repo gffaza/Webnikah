@@ -30,7 +30,8 @@ export function Events() {
       >
         <path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z" />
       </svg>
-      <p className="reveal mt-32 max-w-416 text-body text-ink">{venue.address}</p>
+      <p className="reveal mt-32 max-w-416 text-body text-rose-deep font-bold">Rumah Mempelai Wanita</p>
+      <p className="reveal mt-32 max-w-416 text-xs text-ink">{venue.address}</p>
 
       <a
         href={venue.mapsUrl}

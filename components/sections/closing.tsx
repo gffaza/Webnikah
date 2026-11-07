@@ -24,6 +24,7 @@ export function Closing() {
         {wedding.bride.nickname} &amp; {wedding.groom.nickname}
       </p>
       <Image src="/images/Noheels.png" alt="Noheels" width={100} height={100} />
+      <p className="reveal mt-32 max-w-md text-xs text-rose-deep">Demi kenyamanan, tidak disarankan menggunakan heels</p>
     </Section>
   );
 }
